@@ -1,11 +1,12 @@
-import { createBrowserRouter } from "react-router-dom"
-import Error from "../pages/Error/Error"
-import MainLayout from "../layouts/MainLayout"
-import Home from "../pages/Home/Home"
-import Contact from "../pages/Contact/Contact"
-import Login from "../pages/Login/Login"
-import Register from "../pages/Register/Register"
-import About from "../pages/About/About"
+import { createBrowserRouter } from "react-router-dom";
+import Error from "../pages/Error/Error";
+import MainLayout from "../layouts/MainLayout";
+import Home from "../pages/Home/Home";
+import Contact from "../pages/Contact/Contact";
+import Login from "../pages/Login/Login";
+import Register from "../pages/Register/Register";
+import About from "../pages/About/About";
+import OurMenu from "../pages/OurMenu/OurMenu";
 
 const Router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const Router = createBrowserRouter([
       {
         path: "/about",
         element: <About />,
+      },
+      {
+        path: "/menu",
+        element: <OurMenu />,
       },
       {
         path: "/contact",
@@ -37,6 +42,6 @@ const Router = createBrowserRouter([
     errorElement: <Error />,
     element: <Register />,
   },
-])
+]);
 
-export default Router
+export default Router;

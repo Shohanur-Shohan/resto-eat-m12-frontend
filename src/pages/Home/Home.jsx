@@ -5,10 +5,14 @@ import Banner from "./Banner";
 import Call from "./Call";
 import Menu from "./Menu";
 import Recommended from "./Recommended";
+import { Helmet } from "react-helmet-async";
 
 const Home = () => {
   return (
     <main>
+      <Helmet>
+        <title>Resto Eat | Home</title>
+      </Helmet>
       <Hero />
       <Featured />
       <Banner />

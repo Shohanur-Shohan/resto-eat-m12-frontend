@@ -1,14 +1,14 @@
 import { Helmet } from "react-helmet-async";
 
-const Error = () => {
+const Dashboard = () => {
   return (
     <div>
       <Helmet>
-        <title>Resto Eat | Error</title>
+        <title>Resto Eat | Dashboard</title>
       </Helmet>
-      error
+      dashboard
     </div>
   );
 };
 
-export default Error;
+export default Dashboard;

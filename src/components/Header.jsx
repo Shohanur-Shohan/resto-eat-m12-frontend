@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom"
+import { Link, NavLink } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -34,10 +34,18 @@ const Header = () => {
             </li>
             <li>
               <NavLink
+                to={"/menu"}
+                className="text-white  font-medium hover:text-[#F98C40] transition-colors"
+              >
+                Our Menu
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
                 to={"/contact"}
                 className="text-white  font-medium hover:text-[#F98C40] transition-colors"
               >
-                contact
+                Contact
               </NavLink>
             </li>
           </ul>
@@ -145,6 +153,14 @@ const Header = () => {
                 </li>
                 <li className="mb-5 ">
                   <NavLink
+                    to={"/menu"}
+                    className="my-1 text-[#1e1e1e] border border-transparent  font-medium hover:text-[#F98C40] transition-colors"
+                  >
+                    Our Menu
+                  </NavLink>
+                </li>
+                <li className="mb-5 ">
+                  <NavLink
                     to={"/contact"}
                     className="my-1 text-[#1e1e1e] border border-transparent  font-medium hover:text-[#F98C40] transition-colors"
                   >
@@ -167,7 +183,7 @@ const Header = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
