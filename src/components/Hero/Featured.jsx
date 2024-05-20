@@ -13,7 +13,7 @@ const Featured = () => {
         subTitle={"---From 11:00am to 10:00pm---"}
         title={"ORDER ONLINE"}
       />
-      <div className="max-w-[1440px] mx-auto px-2 sm:px-4 lg:px-7.5 xl:px-10 py-4 md:py-5">
+      <div className="max-w-[1440px] mx-auto py-4 md:py-5">
         <Swiper
           slidesPerView={1}
           spaceBetween={20}

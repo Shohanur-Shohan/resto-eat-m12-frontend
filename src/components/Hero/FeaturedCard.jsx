@@ -10,7 +10,7 @@ const FeaturedCard = ({ image, title, link }) => {
             className="w-full h-full group-hover:scale-[1.05] transition-all"
             alt="img"
           />
-          <h1 className="text-[30px] absolute bottom-3 left-[36%] text-white z-10">
+          <h1 className="w-full flex justify-center text-[30px] absolute bottom-3  text-white z-10">
             {title}
           </h1>
           <div className="absolute top-0 left-0 z-0 w-full h-full bg-overlay2"></div>
