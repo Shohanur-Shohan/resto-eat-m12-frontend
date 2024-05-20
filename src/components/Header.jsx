@@ -2,13 +2,13 @@ import { Link, NavLink } from "react-router-dom"
 
 const Header = () => {
   return (
-    <div className="w-full bg-primary shadow-md shadow-b-[5px] -shadow-spread-2">
-      <div className="navbar  max-w-[1536px] mx-auto flex items-center px-2 sm:px-4 lg:px-7.5 xl:px-10 py-4 md:py-5">
+    <div className="absolute top-0 z-10 w-full">
+      <div className="navbar  max-w-[1440px] mx-auto flex items-center px-2 sm:px-4 lg:px-7.5 xl:px-10 py-4 md:py-5">
         <div className="navbar-start">
-          <Link href={"/"} className="">
+          <Link href={"/"}>
             <img
               src="/assets/logo.png"
-              className="max-w-[110px] sm:max-w-[130px] md:max-w-[150px] xl:max-w-[180px] max-h-[55px]"
+              className="h-[40px] sm:h-[40px] md:h-[50px] lg:h-[50px]"
               alt="logo"
             />
           </Link>
@@ -19,7 +19,7 @@ const Header = () => {
             <li>
               <NavLink
                 to={"/"}
-                className="text-secondary  font-medium hover:text-[#F98C40] transition-colors"
+                className="text-white  font-medium hover:text-[#F98C40] transition-colors"
               >
                 Home
               </NavLink>
@@ -27,7 +27,7 @@ const Header = () => {
             <li>
               <NavLink
                 to={"/about"}
-                className="text-secondary  font-medium hover:text-[#F98C40] transition-colors"
+                className="text-white  font-medium hover:text-[#F98C40] transition-colors"
               >
                 About
               </NavLink>
@@ -35,7 +35,7 @@ const Header = () => {
             <li>
               <NavLink
                 to={"/contact"}
-                className="text-secondary  font-medium hover:text-[#F98C40] transition-colors"
+                className="text-white  font-medium hover:text-[#F98C40] transition-colors"
               >
                 contact
               </NavLink>
@@ -99,7 +99,7 @@ const Header = () => {
                 />
               </label>
             </div>
-            <div className="drawer-side">
+            <div className="drawer-side z-[999]">
               <label
                 htmlFor="my-drawer-4"
                 aria-label="close sidebar"
@@ -130,7 +130,7 @@ const Header = () => {
                 <li className="mb-5 ">
                   <NavLink
                     to={"/"}
-                    className="my-1 text-[#1e1e1e] border border-transparent  font-medium hover:text-[#9ea18e] transition-colors"
+                    className="my-1 text-[#1e1e1e] border border-transparent  font-medium hover:text-[#F98C40] transition-colors"
                   >
                     Home
                   </NavLink>
@@ -138,7 +138,7 @@ const Header = () => {
                 <li className="mb-5 ">
                   <NavLink
                     to={"/about"}
-                    className="my-1 text-[#1e1e1e] border border-transparent  font-medium hover:text-[#9ea18e] transition-colors"
+                    className="my-1 text-[#1e1e1e] border border-transparent  font-medium hover:text-[#F98C40] transition-colors"
                   >
                     About
                   </NavLink>
@@ -146,7 +146,7 @@ const Header = () => {
                 <li className="mb-5 ">
                   <NavLink
                     to={"/contact"}
-                    className="my-1 text-[#1e1e1e] border border-transparent  font-medium hover:text-[#9ea18e] transition-colors"
+                    className="my-1 text-[#1e1e1e] border border-transparent  font-medium hover:text-[#F98C40] transition-colors"
                   >
                     Contact
                   </NavLink>

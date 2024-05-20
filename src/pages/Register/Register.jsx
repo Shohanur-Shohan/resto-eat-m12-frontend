@@ -1,5 +1,11 @@
-const Register = () => {
-  return <div>register</div>;
-};
+import SignUp from "../../components/SignUp"
 
-export default Register;
+const Register = () => {
+  return (
+    <>
+      <SignUp />
+    </>
+  )
+}
+
+export default Register

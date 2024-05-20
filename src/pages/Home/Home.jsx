@@ -1,5 +1,13 @@
-const Home = () => {
-  return <div>Home</div>;
-};
+import Featured from "../../components/Hero/Featured"
+import Hero from "../../components/Hero/Hero"
 
-export default Home;
+const Home = () => {
+  return (
+    <main>
+      <Hero />
+      <Featured />
+    </main>
+  )
+}
+
+export default Home
