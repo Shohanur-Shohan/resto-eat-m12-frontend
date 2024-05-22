@@ -1,8 +1,8 @@
-import { useState } from "react"
-import { Link } from "react-router-dom"
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const SignIn = () => {
-  const [eye, setEye] = useState(false)
+  const [eye, setEye] = useState(false);
 
   return (
     <section className="max-w-[1200px] min-h-[90vh] mx-auto px-2 sm:px-4 lg:px-7.5 xl:px-10 py-[80px] md:py-[100px] flex items-center justify-center">
@@ -17,7 +17,7 @@ const SignIn = () => {
               <p className="mt-2 text-sm text-gray-600 ">
                 Don{"'"}t have an account yet?{" "}
                 <Link
-                  className="font-medium text-[#3B61DD] decoration-2 hover:underline "
+                  className="font-medium text-[#F98C40] decoration-2 hover:underline "
                   to={"/register"}
                 >
                   Sign up here
@@ -68,22 +68,10 @@ const SignIn = () => {
                         type="email"
                         id="email"
                         name="email"
-                        className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#3B61DD] focus:ring-[#3B61DD]"
+                        className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#F98C40] focus:ring-[#F98C40]"
                         required
                         placeholder="Enter your email"
                       />
-                      <div className="absolute inset-y-0 hidden pointer-events-none end-0 pe-3">
-                        <svg
-                          className="text-[#3B61DD] size-5"
-                          width={16}
-                          height={16}
-                          fill="currentColor"
-                          viewBox="0 0 16 16"
-                          aria-hidden="true"
-                        >
-                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                        </svg>
-                      </div>
                     </div>
                   </div>
                   {/* End Form Group */}
@@ -94,7 +82,7 @@ const SignIn = () => {
                         Password
                       </label>
                       <div>
-                        <a className="text-sm font-medium text-[#3B61DD] decoration-2 hover:underline">
+                        <a className="text-sm font-medium text-[#F98C40] decoration-2 hover:underline">
                           Forgot password?
                         </a>
                       </div>
@@ -104,7 +92,7 @@ const SignIn = () => {
                         type={`${eye ? "text" : "password"}`}
                         id="password"
                         name="password"
-                        className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#3B61DD] focus:ring-[#3B61DD]"
+                        className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#F98C40] focus:ring-[#F98C40]"
                         required
                         placeholder=".........."
                       />
@@ -125,6 +113,30 @@ const SignIn = () => {
                     </div>
                   </div>
                   {/* End Form Group */}
+                  {/* recapcha */}
+                  <div>
+                    <div className="relative">
+                      <input
+                        type="recapchaCode"
+                        id="recapchaCode"
+                        name="recapchaCode"
+                        className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#F98C40] focus:ring-[#F98C40]"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <div className="relative">
+                      <input
+                        type="recapcha"
+                        id="recapcha"
+                        name="recapcha"
+                        required
+                        placeholder="Enter Code"
+                        className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#F98C40] focus:ring-[#F98C40]"
+                      />
+                    </div>
+                  </div>
+                  {/* recapcha */}
                   {/* Checkbox */}
                   <div className="flex items-center">
                     <div className="flex">
@@ -132,7 +144,7 @@ const SignIn = () => {
                         id="remember-me"
                         name="remember-me"
                         type="checkbox"
-                        className="shrink-0 mt-0.5 border-gray-200 rounded text-[#3B61DD] focus:ring-[#3B61DD]"
+                        className="shrink-0 mt-0.5 border-gray-200 rounded text-[#F98C40] focus:ring-[#F98C40]"
                       />
                     </div>
                     <div className="ms-3">
@@ -144,7 +156,7 @@ const SignIn = () => {
                   {/* End Checkbox */}
                   <button
                     type="submit"
-                    className="inline-flex items-center justify-center w-full px-4 py-3 text-sm font-semibold text-white hover:text-[#3B61DD] transition-colors bg-[#3B61DD] border border-[#3B61DD] rounded-lg gap-x-2 hover:bg-transparent"
+                    className="inline-flex items-center justify-center w-full px-4 py-3 text-sm font-semibold text-white hover:text-[#F98C40] transition-colors bg-[#F98C40] border border-[#F98C40] rounded-lg gap-x-2 hover:bg-transparent"
                   >
                     Login
                   </button>
@@ -156,7 +168,7 @@ const SignIn = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default SignIn
+export default SignIn;

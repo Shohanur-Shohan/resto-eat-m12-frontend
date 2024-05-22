@@ -1,17 +1,28 @@
+import { useLocation } from "react-router-dom";
 import { Link, NavLink } from "react-router-dom";
 
 const Header = () => {
+  const { pathname } = useLocation();
+  const isSpecialPage = (path) => {
+    return path === "/login" || path === "/register" || path === "/contact";
+  };
   return (
-    <div className="absolute top-0 z-10 w-full">
-      <div className="navbar  max-w-[1440px] mx-auto flex items-center px-2 sm:px-4 lg:px-7.5 xl:px-10 py-4 md:py-5">
+    <div
+      className={`top-0 z-10 w-full ${
+        isSpecialPage(pathname) ? "bg-black" : "absolute"
+      }`}
+    >
+      <div
+        className={`navbar  max-w-[1440px] mx-auto flex items-center px-2 sm:px-4 lg:px-7.5 xl:px-10 py-4 md:py-5`}
+      >
         <div className="navbar-start">
-          <Link href={"/"}>
+          <NavLink to={"/"}>
             <img
               src="/assets/logo.png"
               className="h-[40px] sm:h-[40px] md:h-[50px] lg:h-[50px]"
               alt="logo"
             />
-          </Link>
+          </NavLink>
         </div>
         {/* desktop-menu */}
         <div className="hidden navbar-center lg:flex">
@@ -26,10 +37,10 @@ const Header = () => {
             </li>
             <li>
               <NavLink
-                to={"/about"}
+                to={"/shop"}
                 className="text-white  font-medium hover:text-[#F98C40] transition-colors"
               >
-                About
+                Shop
               </NavLink>
             </li>
             <li>
@@ -37,7 +48,15 @@ const Header = () => {
                 to={"/menu"}
                 className="text-white  font-medium hover:text-[#F98C40] transition-colors"
               >
-                Our Menu
+                Menu
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to={"/about"}
+                className="text-white  font-medium hover:text-[#F98C40] transition-colors"
+              >
+                About
               </NavLink>
             </li>
             <li>
@@ -145,10 +164,10 @@ const Header = () => {
                 </li>
                 <li className="mb-5 ">
                   <NavLink
-                    to={"/about"}
+                    to={"/shop"}
                     className="my-1 text-[#1e1e1e] border border-transparent  font-medium hover:text-[#F98C40] transition-colors"
                   >
-                    About
+                    Shop
                   </NavLink>
                 </li>
                 <li className="mb-5 ">
@@ -156,7 +175,15 @@ const Header = () => {
                     to={"/menu"}
                     className="my-1 text-[#1e1e1e] border border-transparent  font-medium hover:text-[#F98C40] transition-colors"
                   >
-                    Our Menu
+                    Menu
+                  </NavLink>
+                </li>
+                <li className="mb-5 ">
+                  <NavLink
+                    to={"/about"}
+                    className="my-1 text-[#1e1e1e] border border-transparent  font-medium hover:text-[#F98C40] transition-colors"
+                  >
+                    About
                   </NavLink>
                 </li>
                 <li className="mb-5 ">

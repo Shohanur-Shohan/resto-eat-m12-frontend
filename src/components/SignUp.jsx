@@ -1,8 +1,8 @@
-import { useState } from "react"
-import { Link } from "react-router-dom"
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
-  const [eye, setEye] = useState(false)
+  const [eye, setEye] = useState(false);
 
   return (
     <>
@@ -20,7 +20,7 @@ const SignUp = () => {
                 <p className="mt-2 text-sm text-gray-600 ">
                   Don{"'"}t have an account yet?{" "}
                   <Link
-                    className="font-medium text-[#3B61DD] decoration-2 hover:underline "
+                    className="font-medium text-[#F98C40] decoration-2 hover:underline "
                     to={"/login"}
                   >
                     Sign in here
@@ -71,13 +71,13 @@ const SignUp = () => {
                           type="text"
                           id="name"
                           name="name"
-                          className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#3B61DD] focus:ring-[#3B61DD]"
+                          className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#F98C40] focus:ring-[#F98C40]"
                           placeholder="Enter your name.."
                           required=""
                         />
                         <div className="absolute inset-y-0 hidden pointer-events-none end-0 pe-3">
                           <svg
-                            className="text-[#3B61DD] size-5"
+                            className="text-[#F98C40] size-5"
                             width={16}
                             height={16}
                             fill="currentColor"
@@ -100,13 +100,13 @@ const SignUp = () => {
                           type="email"
                           id="email"
                           name="email"
-                          className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#3B61DD] focus:ring-[#3B61DD]"
+                          className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#F98C40] focus:ring-[#F98C40]"
                           required=""
                           placeholder="Enter your email"
                         />
                         <div className="absolute inset-y-0 hidden pointer-events-none end-0 pe-3">
                           <svg
-                            className="text-[#3B61DD] size-5"
+                            className="text-[#F98C40] size-5"
                             width={16}
                             height={16}
                             fill="currentColor"
@@ -144,7 +144,7 @@ const SignUp = () => {
                           //   },
                           // })}
                           type={`${eye ? "text" : "password"}`}
-                          className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#3B61DD] focus:ring-[#3B61DD]"
+                          className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#F98C40] focus:ring-[#F98C40]"
                           required=""
                           placeholder="..........."
                         />
@@ -187,7 +187,7 @@ const SignUp = () => {
                     {/* End Checkbox */}
                     <button
                       type="submit"
-                      className="inline-flex items-center justify-center w-full px-4 py-3 text-sm font-semibold text-white hover:text-[#3B61DD] transition-colors bg-[#3B61DD] border border-[#3B61DD] rounded-lg gap-x-2 hover:bg-transparent"
+                      className="inline-flex items-center justify-center w-full px-4 py-3 text-sm font-semibold text-white hover:text-[#F98C40] transition-colors bg-[#F98C40] border border-[#F98C40] rounded-lg gap-x-2 hover:bg-transparent"
                     >
                       Register
                     </button>
@@ -200,7 +200,7 @@ const SignUp = () => {
         </div>
       </section>
     </>
-  )
-}
+  );
+};
 
-export default SignUp
+export default SignUp;

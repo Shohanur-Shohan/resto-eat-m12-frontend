@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 
-const RecommendedCard = ({ image, title, subTitle, price }) => {
+const ItemCard = ({ data }) => {
+  const { _id, image, name, price, recipe } = data;
+
   return (
     <>
       <div className="col-span-1 bg-white border border-gray-200 rounded-lg shadow ">
@@ -15,11 +17,11 @@ const RecommendedCard = ({ image, title, subTitle, price }) => {
         <div className="p-5">
           <a>
             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 line-clamp-1">
-              {title}
+              {name}
             </h5>
           </a>
           <p className="mb-3 font-normal text-gray-700 line-clamp-2">
-            {subTitle}
+            {recipe}
           </p>
           <button className="mt-2">
             <a className="relative inline-block text-lg group">
@@ -39,10 +41,7 @@ const RecommendedCard = ({ image, title, subTitle, price }) => {
     </>
   );
 };
-RecommendedCard.propTypes = {
-  image: PropTypes.string,
-  title: PropTypes.string,
-  subTitle: PropTypes.string,
-  price: PropTypes.string,
+ItemCard.propTypes = {
+  data: PropTypes.object,
 };
-export default RecommendedCard;
+export default ItemCard;
