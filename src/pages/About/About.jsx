@@ -3,8 +3,15 @@ import Testimonials from "../../components/Testimonials/Testimonials";
 import PageHeading from "../../components/PageHeading";
 import Heading from "../../components/Heading";
 import Team from "./Team/Team";
+import { AuthContext } from "../../providers/AuthPovider";
+import { useContext } from "react";
+import Loader from "../../components/Loaders/Loader";
 
 const About = () => {
+  const { loading } = useContext(AuthContext);
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <main>
       <Helmet>

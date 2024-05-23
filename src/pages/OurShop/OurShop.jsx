@@ -3,10 +3,14 @@ import PageHeading from "../../components/PageHeading";
 import ItemGrid from "./ItemGrid";
 import { useState } from "react";
 import { useEffect } from "react";
+import Loader from "../../components/Loaders/Loader";
+import { AuthContext } from "../../providers/AuthPovider";
+import { useContext } from "react";
 // import Loader from "../../components/Loaders/Loader";
 
 const OurShop = () => {
   const [menu, setMenu] = useState(null);
+  const { loading } = useContext(AuthContext);
 
   const getMenu = async (dish) => {
     const res = await fetch("menu.json");
@@ -19,6 +23,10 @@ const OurShop = () => {
       await getMenu("offered");
     })();
   }, []);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <main>

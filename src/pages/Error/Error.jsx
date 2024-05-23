@@ -2,8 +2,15 @@ import { Helmet } from "react-helmet-async";
 // import Header from "../../components/Header";
 import { Link } from "react-router-dom";
 import Header from "../../components/Header";
+import { AuthContext } from "../../providers/AuthPovider";
+import { useContext } from "react";
+import Loader from "../../components/Loaders/Loader";
 
 const Error = () => {
+  const { loading } = useContext(AuthContext);
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <>
       <Helmet>

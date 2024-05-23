@@ -1,11 +1,22 @@
+import { useContext } from "react";
 import { useLocation } from "react-router-dom";
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../providers/AuthPovider";
+import toast from "react-hot-toast";
+import BtnLoader from "./Loaders/BtnLoader";
 
 const Header = () => {
   const { pathname } = useLocation();
+  const { user, logOut, loading } = useContext(AuthContext);
   const isSpecialPage = (path) => {
     return path === "/login" || path === "/register" || path === "/contact";
   };
+
+  const handlelogOut = () => {
+    logOut();
+    toast.success("Logout Success");
+  };
+
   return (
     <div
       className={`top-0 z-10 w-full ${
@@ -79,38 +90,49 @@ const Header = () => {
             </div>
             {/* search & cart*/}
             {/* Profile */}
-            <div className="dropdown dropdown-end">
-              <div
-                tabIndex={0}
-                role="button"
-                className="flex items-center justify-center rounded-full avatar"
-              >
-                <div className="w-[32px] sm:w-[40px] rounded-full">
-                  <img
-                    alt="avatar"
-                    className="object cover "
-                    src={`/assets/noProfile.svg`}
-                  />
+            {!loading && user && (
+              <div className="dropdown dropdown-end">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="flex items-center justify-center rounded-full avatar"
+                >
+                  <div className="w-[32px] sm:w-[40px] rounded-full">
+                    <img
+                      alt="avatar"
+                      className="object cover "
+                      src={`${user?.photoURL || "/assets/noProfile.svg"} `}
+                    />
+                  </div>
                 </div>
+                <ul
+                  tabIndex={0}
+                  className="menu menu-sm dropdown-content mt-3 z-[999] px-3 py-4 shadow bg-base-100 rounded-box w-52"
+                >
+                  <li className="pl-2 my-2 text-left text-secondary">
+                    Profile
+                  </li>
+                  <button
+                    onClick={() => handlelogOut()}
+                    className="pl-2 my-2 text-left cursor-pointer text-secondary"
+                  >
+                    Logout
+                  </button>
+                </ul>
               </div>
-              <ul
-                tabIndex={0}
-                className="menu menu-sm dropdown-content mt-3 z-[999] px-3 py-4 shadow bg-base-100 rounded-box w-52"
-              >
-                <li className="pl-2 my-2 text-left text-secondary">Profile</li>
-                <button className="pl-2 my-2 text-left cursor-pointer text-secondary">
-                  Logout
-                </button>
-              </ul>
-            </div>
-            {/* Profile */}
+            )}
 
-            <Link
-              to={"/login"}
-              className="hidden sm:flex px-4  py-[7px] sm:px-5 sm:py-[8px] xl:px-7 xl:py-[10px] bg-[#FF8D3F] hover:bg-transparent transition-colors border-[#FF8D3F] border rounded-full  font-medium text-white hover:text-[#FF8D3F]"
-            >
-              Login
-            </Link>
+            {loading && <BtnLoader />}
+
+            {/* Profile */}
+            {!loading && (
+              <Link
+                to={`${user ? "/dashboard" : "/login"}`}
+                className="hidden sm:flex px-4  py-[7px] sm:px-5 sm:py-[8px] xl:px-7 xl:py-[10px] bg-[#FF8D3F] hover:bg-transparent transition-colors border-[#FF8D3F] border rounded-full  font-medium text-white hover:text-[#FF8D3F]"
+              >
+                {`${user ? "Dashboard" : "Login"}`}
+              </Link>
+            )}
           </div>
 
           {/* drawer */}

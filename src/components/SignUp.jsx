@@ -1,8 +1,65 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { useContext } from "react";
+import { AuthContext } from "../providers/AuthPovider";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const [eye, setEye] = useState(false);
+  const { createUser, updateUserData, setLoading, logOut, user, googleSignin } =
+    useContext(AuthContext);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const navigate = useNavigate();
+
+  const handleSignup = (data) => {
+    try {
+      const displayName = data?.name;
+      const email = data?.email;
+      const password = data?.password;
+      //create user
+      createUser(email, password)
+        .then((userCredential) => {
+          if (userCredential) {
+            updateUserData(displayName);
+            logOut();
+            setLoading(false);
+            toast.success("Regristration Success");
+            navigate("/login");
+          }
+        })
+        .catch((error) => {
+          console.log(error.message);
+          toast.error("Regristration Failed!");
+        });
+    } catch (error) {
+      toast.error("Something went wrong!");
+    }
+  };
+
+  //google
+  const handleGoogleSignin = () => {
+    googleSignin()
+      .then((result) => {
+        const currentUser = result.user;
+        if (currentUser) {
+          setLoading(false);
+          toast.success("Login success!");
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        console.log(errorMessage);
+        toast.error("Login failed!");
+      });
+  };
 
   return (
     <>
@@ -28,7 +85,10 @@ const SignUp = () => {
                 </p>
               </div>
               <div className="mt-5">
-                <button className="inline-flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-gray-800 bg-white border border-gray-200 rounded-lg shadow-sm gap-x-2 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none ">
+                <button
+                  onClick={handleGoogleSignin}
+                  className="inline-flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-gray-800 bg-white border border-gray-200 rounded-lg shadow-sm gap-x-2 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none "
+                >
                   <svg
                     className="w-4 h-auto"
                     width={46}
@@ -59,7 +119,7 @@ const SignUp = () => {
                   Or
                 </div>
                 {/* Form */}
-                <form>
+                <form onSubmit={handleSubmit(handleSignup)}>
                   <div className="grid gap-y-4">
                     {/* Form Group */}
                     <div>
@@ -71,22 +131,11 @@ const SignUp = () => {
                           type="text"
                           id="name"
                           name="name"
+                          {...register("fullname")}
                           className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#F98C40] focus:ring-[#F98C40]"
                           placeholder="Enter your name.."
-                          required=""
+                          required
                         />
-                        <div className="absolute inset-y-0 hidden pointer-events-none end-0 pe-3">
-                          <svg
-                            className="text-[#F98C40] size-5"
-                            width={16}
-                            height={16}
-                            fill="currentColor"
-                            viewBox="0 0 16 16"
-                            aria-hidden="true"
-                          >
-                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                          </svg>
-                        </div>
                       </div>
                     </div>
                     {/* End Form Group */}
@@ -100,22 +149,11 @@ const SignUp = () => {
                           type="email"
                           id="email"
                           name="email"
+                          {...register("email")}
                           className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#F98C40] focus:ring-[#F98C40]"
-                          required=""
+                          required
                           placeholder="Enter your email"
                         />
-                        <div className="absolute inset-y-0 hidden pointer-events-none end-0 pe-3">
-                          <svg
-                            className="text-[#F98C40] size-5"
-                            width={16}
-                            height={16}
-                            fill="currentColor"
-                            viewBox="0 0 16 16"
-                            aria-hidden="true"
-                          >
-                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                          </svg>
-                        </div>
                       </div>
                     </div>
                     {/* End Form Group */}
@@ -130,22 +168,22 @@ const SignUp = () => {
                         <input
                           id="password"
                           name="password"
-                          // {...register("password", {
-                          //   minLength: {
-                          //     value: 6,
-                          //     message:
-                          //       "Password must be at least 6 characters long.",
-                          //   },
-                          //   pattern: {
-                          //     value:
-                          //       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$.#!%*?&^])[A-Za-z\d@$.#!%*?&^]*$/,
-                          //     message:
-                          //       "Password must include at least one uppercase, lowercase, digit, and special character.",
-                          //   },
-                          // })}
+                          {...register("password", {
+                            minLength: {
+                              value: 6,
+                              message:
+                                "Password must be at least 6 characters long.",
+                            },
+                            pattern: {
+                              value:
+                                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$.#!%*?&^])[A-Za-z\d@$.#!%*?&^]*$/,
+                              message:
+                                "Password must include at least one uppercase, lowercase, digit, and special character.",
+                            },
+                          })}
                           type={`${eye ? "text" : "password"}`}
                           className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#F98C40] focus:ring-[#F98C40]"
-                          required=""
+                          required
                           placeholder="..........."
                         />
                         <div
@@ -164,7 +202,7 @@ const SignUp = () => {
                         </div>
                       </div>
                       <p className="text-red-600">
-                        {/* {errors?.password?.message} */}
+                        {errors?.password?.message}
                       </p>
                     </div>
                     {/* End Form Group */}

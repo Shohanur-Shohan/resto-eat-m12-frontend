@@ -1,8 +1,76 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import {
+  loadCaptchaEnginge,
+  LoadCanvasTemplate,
+  validateCaptcha,
+} from "react-simple-captcha";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../providers/AuthPovider";
 
 const SignIn = () => {
+  const { setLoading, setUser, userSignIn, user, googleSignin } =
+    useContext(AuthContext);
   const [eye, setEye] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const navigate = useNavigate();
+  useEffect(() => {
+    loadCaptchaEnginge(6);
+  }, []);
+
+  const handleSignin = (data) => {
+    try {
+      const email = data?.email;
+      const password = data?.password;
+      const user_captcha_value = data?.recapcha;
+      if (validateCaptcha(user_captcha_value) === true) {
+        userSignIn(email, password)
+          .then((userCredential) => {
+            if (userCredential) {
+              const currentUser = userCredential.user;
+              setUser(currentUser);
+              setLoading(false);
+              toast.success("Login Success");
+              navigate("/");
+            }
+          })
+          .catch((error) => {
+            console.log(error.message);
+            toast.error("Login failed!");
+          });
+      } else {
+        toast.error("Captcha Verification Failed!");
+      }
+    } catch (error) {
+      toast.error("Something went wrong!");
+    }
+  };
+
+  //google
+  const handleGoogleSignin = () => {
+    googleSignin()
+      .then((result) => {
+        const currentUser = result.user;
+        if (currentUser) {
+          setLoading(false);
+          toast.success("Login success!");
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        console.log(errorMessage);
+        toast.error("Login failed!");
+      });
+  };
 
   return (
     <section className="max-w-[1200px] min-h-[90vh] mx-auto px-2 sm:px-4 lg:px-7.5 xl:px-10 py-[80px] md:py-[100px] flex items-center justify-center">
@@ -25,7 +93,10 @@ const SignIn = () => {
               </p>
             </div>
             <div className="mt-5">
-              <button className="inline-flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-gray-800 bg-white border border-gray-200 rounded-lg shadow-sm gap-x-2 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none ">
+              <button
+                onClick={handleGoogleSignin}
+                className="inline-flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-gray-800 bg-white border border-gray-200 rounded-lg shadow-sm gap-x-2 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none "
+              >
                 <svg
                   className="w-4 h-auto"
                   width={46}
@@ -56,7 +127,7 @@ const SignIn = () => {
                 Or
               </div>
               {/* Form */}
-              <form>
+              <form onSubmit={handleSubmit(handleSignin)}>
                 <div className="grid gap-y-4">
                   {/* Form Group */}
                   <div>
@@ -68,6 +139,7 @@ const SignIn = () => {
                         type="email"
                         id="email"
                         name="email"
+                        {...register("email")}
                         className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#F98C40] focus:ring-[#F98C40]"
                         required
                         placeholder="Enter your email"
@@ -82,7 +154,7 @@ const SignIn = () => {
                         Password
                       </label>
                       <div>
-                        <a className="text-sm font-medium text-[#F98C40] decoration-2 hover:underline">
+                        <a className="text-sm font-medium text-[#F98C40] decoration-2 underline">
                           Forgot password?
                         </a>
                       </div>
@@ -92,6 +164,7 @@ const SignIn = () => {
                         type={`${eye ? "text" : "password"}`}
                         id="password"
                         name="password"
+                        {...register("password")}
                         className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#F98C40] focus:ring-[#F98C40]"
                         required
                         placeholder=".........."
@@ -116,21 +189,17 @@ const SignIn = () => {
                   {/* recapcha */}
                   <div>
                     <div className="relative">
-                      <input
-                        type="recapchaCode"
-                        id="recapchaCode"
-                        name="recapchaCode"
-                        className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#F98C40] focus:ring-[#F98C40]"
-                      />
+                      <LoadCanvasTemplate />
                     </div>
                   </div>
                   <div>
                     <div className="relative">
                       <input
-                        type="recapcha"
+                        type="text"
                         id="recapcha"
                         name="recapcha"
                         required
+                        {...register("recapcha")}
                         placeholder="Enter Code"
                         className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#F98C40] focus:ring-[#F98C40]"
                       />

@@ -7,9 +7,12 @@ import InnerPageHeading from "../../components/InnerPageHeading";
 import { Helmet } from "react-helmet-async";
 import { allMenu } from "../../utils/api";
 import Loader from "../../components/Loaders/Loader";
+import { useContext } from "react";
+import { AuthContext } from "../../providers/AuthPovider";
 
 const OurMenu = () => {
   const [menu, setMenu] = useState(null);
+  const { loading } = useContext(AuthContext);
 
   const getMenu = async () => {
     const result = await allMenu();
@@ -21,7 +24,9 @@ const OurMenu = () => {
     getMenu();
   }, []);
   // console.log(menu);
-
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <main className="relative">
       <Helmet>
