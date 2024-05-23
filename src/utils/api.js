@@ -12,3 +12,10 @@ export const addToCart = async (itemData) => {
   const result = res.data;
   return result;
 };
+
+export const getCart = async (userEmail) => {
+  const res = await axiosSecure.get(`/carts?email=${userEmail}`);
+  const result = res.data;
+  // console.log(result);
+  return result;
+};

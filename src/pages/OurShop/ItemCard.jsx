@@ -4,13 +4,16 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { addToCart } from "../../utils/api";
+import useCarts from "../../hooks/useCarts";
+
 const ItemCard = ({ data }) => {
   const { _id, image, name, price, recipe } = data;
   const { user } = useAuth();
+  const [cartData, isLoading, refetch] = useCarts();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleAddToCart = async () => {
+  const handleAddToCart = () => {
     if (user && user?.email) {
       Swal.fire({
         title: "Are you sure?",
@@ -29,7 +32,9 @@ const ItemCard = ({ data }) => {
             price,
           };
           const result = await addToCart(cartItem);
+
           if (result?.insertedId) {
+            refetch();
             Swal.fire({
               title: "Item added to cart!",
               icon: "success",
