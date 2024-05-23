@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom"
-import PropTypes from "prop-types"
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const HeroCard = ({ title, des, prev, next, id, image }) => {
   return (
@@ -18,8 +18,11 @@ const HeroCard = ({ title, des, prev, next, id, image }) => {
               <p className="text-[14px] text-center md:text-left md:text-[16px] lg:text-[18px] text-white font-light my-3 sm:my-[16px] md:my-[35px]">
                 {des}
               </p>
-              <div className="justify-center gap-3 sm:flex md:justify-start">
-                <Link className="block sm:flex mx-auto sm:m-0 px-[30px] py-[10px] md:px-[35px] md:py-[12px] lg:px-[40px] xl:py-[12px] hover:bg-transparent bg-[#F98D40] transition-colors border-[#F98D40] border rounded-lg  font-medium hover:text-[#F98D40] text-[#fff]">
+              <div className="flex justify-center gap-3 md:justify-start">
+                <Link
+                  to={"/shop"}
+                  className="block sm:flex mx-auto sm:m-0 px-[30px] py-[10px] md:px-[35px] md:py-[12px] lg:px-[40px] xl:py-[12px] hover:bg-transparent bg-[#F98D40] transition-colors border-[#F98D40] border rounded-lg  font-medium hover:text-[#F98D40] text-[#fff]"
+                >
                   Order Now
                 </Link>
               </div>
@@ -36,8 +39,8 @@ const HeroCard = ({ title, des, prev, next, id, image }) => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 HeroCard.propTypes = {
   title: PropTypes.string,
   des: PropTypes.string,
@@ -45,5 +48,5 @@ HeroCard.propTypes = {
   image: PropTypes.string,
   prev: PropTypes.string,
   next: PropTypes.string,
-}
-export default HeroCard
+};
+export default HeroCard;

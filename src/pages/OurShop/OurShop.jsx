@@ -4,13 +4,13 @@ import ItemGrid from "./ItemGrid";
 import { useState } from "react";
 import { useEffect } from "react";
 import Loader from "../../components/Loaders/Loader";
-import { AuthContext } from "../../providers/AuthPovider";
-import { useContext } from "react";
+import useAuth from "../../hooks/useAuth";
 // import Loader from "../../components/Loaders/Loader";
 
 const OurShop = () => {
   const [menu, setMenu] = useState(null);
-  const { loading } = useContext(AuthContext);
+  // const { loading } = useContext(AuthContext);
+  const { loading } = useAuth();
 
   const getMenu = async (dish) => {
     const res = await fetch("menu.json");
@@ -42,7 +42,10 @@ const OurShop = () => {
         {/* {menu === null ? (
           <Loader />
         ) : ( */}
-        <div role="tablist" className="tabs tabs-bordered">
+        <div
+          role="tablist"
+          className="overflow-x-scroll sm:overflow-hidden tabs tabs-bordered"
+        >
           <input
             type="radio"
             name="my_tabs_1"

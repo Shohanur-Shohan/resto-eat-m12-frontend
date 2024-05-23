@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../providers/AuthPovider";
+import { useLocation } from "react-router-dom";
 
 const SignIn = () => {
   const { setLoading, setUser, userSignIn, user, googleSignin } =
@@ -22,9 +23,13 @@ const SignIn = () => {
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
+  const location = useLocation();
+  // console.log(location);
   useEffect(() => {
     loadCaptchaEnginge(6);
   }, []);
+
+  const from = location?.state?.from;
 
   const handleSignin = (data) => {
     try {
@@ -39,7 +44,7 @@ const SignIn = () => {
               setUser(currentUser);
               setLoading(false);
               toast.success("Login Success");
-              navigate("/");
+              navigate(location?.state ? from : "/");
             }
           })
           .catch((error) => {
@@ -62,7 +67,7 @@ const SignIn = () => {
         if (currentUser) {
           setLoading(false);
           toast.success("Login success!");
-          navigate("/");
+          navigate(location?.state ? from : "/");
         }
       })
       .catch((error) => {
@@ -200,6 +205,7 @@ const SignIn = () => {
                         name="recapcha"
                         required
                         {...register("recapcha")}
+                        disabled={user ? true : false}
                         placeholder="Enter Code"
                         className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#F98C40] focus:ring-[#F98C40]"
                       />
@@ -223,12 +229,15 @@ const SignIn = () => {
                     </div>
                   </div>
                   {/* End Checkbox */}
-                  <button
-                    type="submit"
-                    className="inline-flex items-center justify-center w-full px-4 py-3 text-sm font-semibold text-white hover:text-[#F98C40] transition-colors bg-[#F98C40] border border-[#F98C40] rounded-lg gap-x-2 hover:bg-transparent"
-                  >
-                    Login
-                  </button>
+                  {!user && (
+                    <button
+                      disabled={user ? true : false}
+                      type="submit"
+                      className="inline-flex items-center justify-center w-full px-4 py-3 text-sm font-semibold text-white hover:text-[#F98C40] transition-colors bg-[#F98C40] border border-[#F98C40] rounded-lg gap-x-2 hover:bg-transparent"
+                    >
+                      Login
+                    </button>
+                  )}
                 </div>
               </form>
               {/* End Form */}

@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { useContext } from "react";
 import { AuthContext } from "../providers/AuthPovider";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const SignUp = () => {
   const [eye, setEye] = useState(false);
@@ -17,6 +18,7 @@ const SignUp = () => {
   } = useForm();
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSignup = (data) => {
     try {
@@ -51,7 +53,7 @@ const SignUp = () => {
         if (currentUser) {
           setLoading(false);
           toast.success("Login success!");
-          navigate("/");
+          navigate(location?.state ? from : "/");
         }
       })
       .catch((error) => {
@@ -223,12 +225,15 @@ const SignUp = () => {
                       </div>
                     </div>
                     {/* End Checkbox */}
-                    <button
-                      type="submit"
-                      className="inline-flex items-center justify-center w-full px-4 py-3 text-sm font-semibold text-white hover:text-[#F98C40] transition-colors bg-[#F98C40] border border-[#F98C40] rounded-lg gap-x-2 hover:bg-transparent"
-                    >
-                      Register
-                    </button>
+                    {!user && (
+                      <button
+                        disabled={user ? true : false}
+                        type="submit"
+                        className={`inline-flex items-center justify-center w-full px-4 py-3 text-sm font-semibold text-white hover:text-[#F98C40] transition-colors bg-[#F98C40] border border-[#F98C40] rounded-lg gap-x-2 hover:bg-transparent`}
+                      >
+                        Register
+                      </button>
+                    )}
                   </div>
                 </form>
                 {/* End Form */}
