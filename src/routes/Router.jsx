@@ -8,8 +8,8 @@ import Register from "../pages/Register/Register";
 import About from "../pages/About/About";
 import OurMenu from "../pages/OurMenu/OurMenu";
 import OurShop from "../pages/OurShop/OurShop";
-import Dashboard from "../pages/Dashboard/Dashboard";
 import DashboardLayout from "../layouts/DashboardLayout";
+import UserDashboard from "../pages/Dashboard/User/UserDashboard";
 
 const Router = createBrowserRouter([
   {
@@ -40,9 +40,15 @@ const Router = createBrowserRouter([
     ],
   },
   {
-    path: "/dashboard",
+    path: "dashboard",
     errorElement: <Error />,
     element: <DashboardLayout />,
+    children: [
+      {
+        path: "",
+        element: <UserDashboard />,
+      },
+    ],
   },
   {
     path: "/login",

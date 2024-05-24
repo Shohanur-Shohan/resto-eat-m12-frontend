@@ -1,10 +1,11 @@
+import { Outlet } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const DashboardLayout = () => {
   return (
-    <>
-      <header className=" flex flex-wrap sm:justify-start sm:flex-nowrap z-[48] w-full bg-white border-b text-sm py-2.5 sm:py-4 lg:ps-64">
+    <main className="">
+      <header className="z-[48] bg-white border-b text-sm py-2.5 sm:py-4">
         <nav
           className="flex items-center w-full px-4 mx-auto basis-full sm:px-6"
           aria-label="Global"
@@ -241,13 +242,11 @@ const DashboardLayout = () => {
       </div>
       {/* End Sidebar */}
       {/* Content */}
-      <div className="w-full lg:ps-64">
-        <div className="p-4 space-y-4 sm:p-6 sm:space-y-6">
-          <p>hello</p>
-        </div>
+      <div className="w-full lg:ps-[16.2rem]">
+        <Outlet></Outlet>
       </div>
       {/* End Content */}
-    </>
+    </main>
   );
 };
 
