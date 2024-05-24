@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { NavLink } from "react-router-dom";
-import { Link } from "react-router-dom";
+import UserSidebar from "../pages/Dashboard/User/UserSidebar";
+import AdminSidebar from "../pages/Dashboard/Admin/AdminSidebar";
 
 const DashboardLayout = () => {
   return (
@@ -184,62 +185,8 @@ const DashboardLayout = () => {
         </nav>
       </header>
       {/* Sidebar start*/}
-      <div className="-translate-x-full transition-all duration-300 transform w-[260px] hidden fixed inset-y-0 start-0 z-[60] bg-white border-e border-gray-200 lg:block lg:translate-x-0 lg:end-auto lg:bottom-0">
-        <div className="px-8 pt-4">
-          {/* Logo */}
-          <Link
-            to={"/"}
-            className="flex-none inline-block text-xl font-semibold rounded-xl focus:outline-none focus:opacity-80"
-          >
-            <img src="/assets/logo.png" className="max-w-[150px]" alt="logo" />
-          </Link>
-          {/* End Logo */}
-        </div>
-        <nav className="flex flex-col flex-wrap w-full p-6">
-          <ul className="space-y-1.5">
-            <li>
-              <a className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-neutral-700 rounded-lg hover:bg-gray-100">
-                <svg
-                  className="flex-shrink-0 size-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width={24}
-                  height={24}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                  <polyline points="9 22 9 12 15 12 15 22" />
-                </svg>
-                Dashboard
-              </a>
-            </li>
-            <li>
-              <a className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-neutral-700 rounded-lg hover:bg-gray-100">
-                <svg
-                  className="flex-shrink-0 size-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width={24}
-                  height={24}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                  <polyline points="9 22 9 12 15 12 15 22" />
-                </svg>
-                About
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
+      <UserSidebar />
+      {/* <AdminSidebar /> */}
       {/* End Sidebar */}
       {/* Content */}
       <div className="w-full lg:ps-[16.2rem]">
