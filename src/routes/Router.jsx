@@ -9,6 +9,7 @@ import About from "../pages/About/About";
 import OurMenu from "../pages/OurMenu/OurMenu";
 import OurShop from "../pages/OurShop/OurShop";
 import Dashboard from "../pages/Dashboard/Dashboard";
+import DashboardLayout from "../layouts/DashboardLayout";
 
 const Router = createBrowserRouter([
   {
@@ -41,7 +42,7 @@ const Router = createBrowserRouter([
   {
     path: "/dashboard",
     errorElement: <Error />,
-    element: <Dashboard />,
+    element: <DashboardLayout />,
   },
   {
     path: "/login",
