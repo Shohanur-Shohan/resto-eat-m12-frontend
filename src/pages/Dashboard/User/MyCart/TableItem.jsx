@@ -1,10 +1,43 @@
 import PropTypes from "prop-types";
+import toast from "react-hot-toast";
+import Swal from "sweetalert2";
+import { deleteCartItem } from "../../../../utils/api";
 
 const TableItem = ({ item, refetch }) => {
   const { _id, name, image, menuID, UserEmail, price } = item;
 
   const handleRemove = (id) => {
-    console.log(id);
+    try {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const res = await deleteCartItem(id);
+          if (res.deletedCount === 1) {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+            });
+            refetch();
+          } else {
+            Swal.fire({
+              title: "Sometthing went wrong!",
+              text: "Item can't be deleted",
+              icon: "error",
+            });
+          }
+        }
+      });
+    } catch (error) {
+      toast.error("Something went wrong!");
+    }
   };
   return (
     <>

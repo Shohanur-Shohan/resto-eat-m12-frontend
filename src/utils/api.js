@@ -19,3 +19,10 @@ export const getCart = async (userEmail) => {
   // console.log(result);
   return result;
 };
+
+export const deleteCartItem = async (itemId) => {
+  const res = await axiosSecure.delete(`/carts/${itemId}`);
+  const result = res.data;
+  // console.log(result);
+  return result;
+};
