@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { AuthContext } from "../providers/AuthPovider";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { sendUserToDB } from "../utils/api";
 
 const SignUp = () => {
   const [eye, setEye] = useState(false);
@@ -19,25 +20,35 @@ const SignUp = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const from = location?.state?.from;
 
   const handleSignup = (data) => {
     try {
-      const displayName = data?.name;
+      const displayName = data?.fullname;
       const email = data?.email;
       const password = data?.password;
+      const userInfo = {
+        userName: displayName,
+        userEmail: email,
+      };
       //create user
       createUser(email, password)
-        .then((userCredential) => {
+        .then(async (userCredential) => {
           if (userCredential) {
             updateUserData(displayName);
-            logOut();
-            setLoading(false);
-            toast.success("Regristration Success");
-            navigate("/login");
+            const result = await sendUserToDB(userInfo);
+            // console.log(result);
+            if (result?.insertedId) {
+              logOut();
+              setLoading(false);
+              toast.success("Regristration Success");
+              navigate("/login");
+            }
           }
         })
         .catch((error) => {
           console.log(error.message);
+          setLoading(false);
           toast.error("Regristration Failed!");
         });
     } catch (error) {
@@ -48,12 +59,24 @@ const SignUp = () => {
   //google
   const handleGoogleSignin = () => {
     googleSignin()
-      .then((result) => {
+      .then(async (result) => {
         const currentUser = result.user;
+        // console.log(currentUser);
+        const userInfo = {
+          userName: currentUser?.displayName,
+          userEmail: currentUser?.email,
+        };
         if (currentUser) {
-          setLoading(false);
-          toast.success("Login success!");
-          navigate(location?.state ? from : "/");
+          const result = await sendUserToDB(userInfo);
+          // console.log(result);
+          if (result?.insertedId) {
+            setLoading(false);
+            toast.success("Account created successfully!");
+            navigate(location?.state ? from : "/");
+          } else if (result?.insertedId == null) {
+            setLoading(false);
+            toast.error(result?.message);
+          }
         }
       })
       .catch((error) => {
