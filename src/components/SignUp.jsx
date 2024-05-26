@@ -75,7 +75,8 @@ const SignUp = () => {
             navigate(location?.state ? from : "/");
           } else if (result?.insertedId == null) {
             setLoading(false);
-            toast.error(result?.message);
+            toast.error(`${result?.message}, Login Now`);
+            navigate("/login");
           }
         }
       })

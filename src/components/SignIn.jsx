@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../providers/AuthPovider";
 import { useLocation } from "react-router-dom";
+import { sendUserToDB } from "../utils/api";
 
 const SignIn = () => {
   const { setLoading, setUser, userSignIn, user, googleSignin } =
@@ -62,12 +63,25 @@ const SignIn = () => {
   //google
   const handleGoogleSignin = () => {
     googleSignin()
-      .then((result) => {
+      .then(async (result) => {
         const currentUser = result.user;
+        // console.log(currentUser);
+        const userInfo = {
+          userName: currentUser?.displayName,
+          userEmail: currentUser?.email,
+        };
         if (currentUser) {
-          setLoading(false);
-          toast.success("Login success!");
-          navigate(location?.state ? from : "/");
+          const result = await sendUserToDB(userInfo);
+          // console.log(result);
+          if (result?.insertedId) {
+            setLoading(false);
+            toast.success("Account created successfully!");
+            navigate(location?.state ? from : "/");
+          } else if (result?.insertedId == null) {
+            setLoading(false);
+            toast.success("Login success!");
+            navigate(location?.state ? from : "/");
+          }
         }
       })
       .catch((error) => {
