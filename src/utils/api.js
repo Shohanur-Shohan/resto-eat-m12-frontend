@@ -31,3 +31,17 @@ export const sendUserToDB = async (user) => {
   const result = res.data;
   return result;
 };
+
+//all users in dashboard/admin
+export const allUsers = async () => {
+  const res = await axiosSecure.get(`/users`);
+  const result = res.data;
+  return result;
+};
+
+//delete a user dashboard admin
+export const deleteUser = async (userId) => {
+  const res = await axiosSecure.delete(`/users/${userId}`);
+  const result = res.data;
+  return result;
+};

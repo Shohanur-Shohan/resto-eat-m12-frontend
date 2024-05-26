@@ -18,6 +18,9 @@ const AuthPovider = ({ children }) => {
   const [user, setUser] = useState(null);
   const googleProvider = new GoogleAuthProvider();
 
+  //admin or user
+  const isAdmin = true;
+
   //create user
   const createUser = (email, password) => {
     setLoading(true);
@@ -59,6 +62,7 @@ const AuthPovider = ({ children }) => {
     logOut,
     userSignIn,
     googleSignin,
+    isAdmin,
   };
 
   useEffect(() => {
