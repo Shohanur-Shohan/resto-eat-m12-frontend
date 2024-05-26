@@ -45,3 +45,12 @@ export const deleteUser = async (userId) => {
   const result = res.data;
   return result;
 };
+
+//change role fo a user
+export const updateUserRole = async (userId, newRole) => {
+  const res = await axiosSecure.patch(`/user/admin/${userId}`, {
+    role: newRole,
+  });
+  const result = res.data;
+  return result;
+};

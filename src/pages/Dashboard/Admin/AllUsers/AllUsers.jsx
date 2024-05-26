@@ -32,9 +32,6 @@ const AllUsers = () => {
                   Role
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Update
-                </th>
-                <th scope="col" className="px-6 py-3">
                   Action
                 </th>
               </tr>

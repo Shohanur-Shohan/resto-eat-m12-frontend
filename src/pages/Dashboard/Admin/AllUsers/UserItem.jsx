@@ -1,10 +1,19 @@
 import PropTypes from "prop-types";
 import toast from "react-hot-toast";
-import { deleteUser } from "../../../../utils/api";
+import { deleteUser, updateUserRole } from "../../../../utils/api";
 import Swal from "sweetalert2";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 const UserItem = ({ index, data, refetch }) => {
-  const { _id, userName, userEmail } = data;
+  const { _id, userName, userEmail, role } = data;
+  const [modal, setModal] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   const handleDelete = async (id) => {
     try {
       Swal.fire({
@@ -33,6 +42,20 @@ const UserItem = ({ index, data, refetch }) => {
       toast.error("Something went wrong!");
     }
   };
+
+  //update role
+  const handleRole = async (data) => {
+    const role = data?.role;
+    const result = await updateUserRole(_id, role);
+    if (result) {
+      document.getElementById("my_modal_3").close();
+      toast.success("User Role Updated");
+      refetch();
+    } else {
+      toast.error("Something went wrong");
+    }
+  };
+
   return (
     <>
       <tr className="bg-white border-b hover:bg-gray-50 ">
@@ -42,17 +65,16 @@ const UserItem = ({ index, data, refetch }) => {
         <td className="px-6 py-4">{userName}</td>
         <td className="px-6 py-4">{userEmail}</td>
         <td className="px-6 py-4">
-          <div className="flex items-center">
-            <div className="h-2.5 w-2.5 rounded-full bg-green-500 me-2" /> User
+          <div className="flex items-center gap-2">
+            <div className="h-2.5 w-2.5 rounded-full bg-green-500 me-2" />
+            {role || "user"}
+            <button
+              onClick={() => document.getElementById("my_modal_3").showModal()}
+              className="font-medium text-blue-600 hover:underline"
+            >
+              (Edit)
+            </button>
           </div>
-        </td>
-        <td className="px-6 py-4">
-          <button
-            onClick={() => document.getElementById("my_modal_3").showModal()}
-            className="font-medium text-blue-600 hover:underline"
-          >
-            Edit
-          </button>
           {/* modal */}
           <dialog id="my_modal_3" className="modal">
             <div className="modal-box">
@@ -61,14 +83,32 @@ const UserItem = ({ index, data, refetch }) => {
                   ✕
                 </button>
               </form>
-              <h3 className="text-lg font-bold">Hello!</h3>
-              <p className="py-4">
-                Press ESC key or click on ✕ button to close
-              </p>
+              <div className="label">
+                <span className="label-text">Change user role:</span>
+              </div>
+
+              <div className={`${modal === true ? "hidden" : "block"}`}>
+                <select
+                  name="role"
+                  {...register("role")}
+                  className="w-full max-w-xs select select-bordered"
+                >
+                  <option disabled>Role</option>
+                  <option value={"user"}>User</option>
+                  <option value={"admin"}>Admin</option>
+                </select>
+                <button
+                  onClick={handleSubmit(handleRole)}
+                  className="block h-12 px-6 mt-4 font-medium tracking-wide text-white transition duration-200 bg-gray-900 rounded-lg hover:bg-gray-800 focus:shadow-outline focus:outline-none"
+                >
+                  Update
+                </button>
+              </div>
             </div>
           </dialog>
           {/* modal */}
         </td>
+
         <td className="px-6 py-4">
           <button
             onClick={() => handleDelete(_id)}
