@@ -1,5 +1,7 @@
 import { axiosPublic } from "../hooks/useAxiosPublic";
-import { axiosSecure } from "../hooks/useAxiosSecure";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+
+const axiosSecure = useAxiosSecure;
 
 export const allMenu = async () => {
   const res = await axiosSecure.get(`/menu`);
@@ -34,7 +36,11 @@ export const sendUserToDB = async (user) => {
 
 //all users in dashboard/admin
 export const allUsers = async () => {
-  const res = await axiosSecure.get(`/users`);
+  const res = await axiosSecure.get(`/users`, {
+    headers: {
+      authorization: `Bearer ${localStorage.getItem("access-token")}`,
+    },
+  });
   const result = res.data;
   return result;
 };
@@ -51,6 +57,14 @@ export const updateUserRole = async (userId, newRole) => {
   const res = await axiosSecure.patch(`/user/admin/${userId}`, {
     role: newRole,
   });
+  const result = res.data;
+  return result;
+};
+
+//create jwt token
+export const createToken = async (userInfo) => {
+  // console.log(userInfo);
+  const res = await axiosSecure.post(`/jwt`, userInfo);
   const result = res.data;
   return result;
 };

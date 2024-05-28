@@ -12,6 +12,7 @@ import {
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import auth from "../config/firebase.config";
 import { useEffect } from "react";
+import { createToken } from "../utils/api";
 
 const AuthPovider = ({ children }) => {
   const [loading, setLoading] = useState(true);
@@ -66,9 +67,39 @@ const AuthPovider = ({ children }) => {
   };
 
   useEffect(() => {
-    const unSubscribe = onAuthStateChanged(auth, (user) => {
+    const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setLoading(false);
-      setUser(user);
+      setUser(currentUser);
+      const userInfo = {
+        email: currentUser?.email,
+      };
+      // handleAuthChange
+      const handleAuthChange = async () => {
+        if (currentUser) {
+          try {
+            const result = await createToken(userInfo);
+            if (result) {
+              // console.log(result, result?.token);
+              localStorage.setItem("access-token", result?.token);
+            } else {
+              console.log("can not set token from auth");
+              localStorage.removeItem("access-token");
+            }
+          } catch (error) {
+            console.log("something went wrong in handle auth change");
+          }
+        }
+      };
+      handleAuthChange();
+      // console.log(result);
+      // if (result) {
+      //   console.log(result?.token);
+      //   localStorage.setItem("access-token", result?.token);
+      // }
+      // } else {
+      //   console.log("can not set token from auth");
+      //   localStorage.removeItem("access-token");
+      // }
     });
     return () => {
       unSubscribe();
