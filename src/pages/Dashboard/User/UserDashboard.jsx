@@ -6,7 +6,7 @@ const Dashboard = () => {
       <Helmet>
         <title>Resto Eat | Dashboard</title>
       </Helmet>
-      user dashboard
+      {/* user dashboard */}
     </div>
   );
 };

@@ -9,11 +9,20 @@ import MyBooking from "../pages/Dashboard/User/MyBooking/MyBooking";
 import AdminDashboard from "../pages/Dashboard/Admin/AdminDashboard";
 import ManageItems from "../pages/Dashboard/Admin/ManageItems/ManageItems";
 import AllUsers from "../pages/Dashboard/Admin/AllUsers/AllUsers";
-import useAuth from "../hooks/useAuth";
+// import useAuth from "../hooks/useAuth";
 import { useRoutes } from "react-router-dom";
+import useAdmin from "../hooks/useAdmin";
+import Loader from "../components/Loaders/Loader";
 
 const AdminOrUser = () => {
-  const { isAdmin } = useAuth();
+  const [isAdmin, isAdminLoading] = useAdmin();
+
+  if (isAdminLoading) {
+    return <Loader />;
+  }
+  // if (!isAdminLoading && isAdmin) {
+  //   console.log(isAdmin);
+  // }
 
   const adminRoutes = [
     { path: "", element: <AdminDashboard /> },
@@ -32,7 +41,8 @@ const AdminOrUser = () => {
     { path: "my-booking", element: <MyBooking /> },
   ];
 
-  const routes = isAdmin ? adminRoutes : userRoutes;
+  const routes = isAdmin?.role === "admin" ? adminRoutes : userRoutes;
+  // const routes = userRoutes;
 
   return useRoutes(routes);
 };

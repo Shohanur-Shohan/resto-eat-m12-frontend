@@ -3,14 +3,15 @@ import { getCart } from "../utils/api";
 import useAuth from "./useAuth";
 
 const useCarts = () => {
-  const { user } = useAuth();
+  const [Auth] = useAuth();
+  const userEmail = Auth?.user?.email;
   const {
     data = [],
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["cart", user?.email],
-    queryFn: async () => await getCart(user?.email),
+    queryKey: ["cart", userEmail],
+    queryFn: async () => await getCart(userEmail),
   });
   return [data, isLoading, refetch];
 };

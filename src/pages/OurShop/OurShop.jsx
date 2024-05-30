@@ -10,7 +10,7 @@ import useAuth from "../../hooks/useAuth";
 const OurShop = () => {
   const [menu, setMenu] = useState(null);
   // const { loading } = useContext(AuthContext);
-  const { loading } = useAuth();
+  const [loading] = useAuth();
 
   const getMenu = async (dish) => {
     const res = await fetch("menu.json");

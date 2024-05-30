@@ -3,7 +3,7 @@ import { AuthContext } from "../providers/AuthPovider";
 
 const useAuth = () => {
   const Auth = useContext(AuthContext);
-  return Auth;
+  return [Auth];
 };
 
 export default useAuth;

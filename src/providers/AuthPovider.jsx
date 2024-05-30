@@ -20,7 +20,8 @@ const AuthPovider = ({ children }) => {
   const googleProvider = new GoogleAuthProvider();
 
   //admin or user
-  const isAdmin = true;
+
+  // const isAdmin = true;
 
   //create user
   const createUser = (email, password) => {
@@ -63,7 +64,7 @@ const AuthPovider = ({ children }) => {
     logOut,
     userSignIn,
     googleSignin,
-    isAdmin,
+    // isAdmin,
   };
 
   useEffect(() => {
@@ -88,25 +89,18 @@ const AuthPovider = ({ children }) => {
           } catch (error) {
             console.log("something went wrong in handle auth change");
           }
+        } else {
+          console.log("can not set token from auth");
+          localStorage.removeItem("access-token");
         }
       };
       handleAuthChange();
-      // console.log(result);
-      // if (result) {
-      //   console.log(result?.token);
-      //   localStorage.setItem("access-token", result?.token);
-      // }
-      // } else {
-      //   console.log("can not set token from auth");
-      //   localStorage.removeItem("access-token");
-      // }
+      // console.log(currentUser);
     });
     return () => {
       unSubscribe();
     };
   }, []);
-
-  // console.log(user);
 
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

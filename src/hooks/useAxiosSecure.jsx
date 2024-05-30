@@ -1,14 +1,16 @@
 import axios from "axios";
 
-const useAxiosSecure = axios.create({
+const axiosSecure = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
   //   withCredentials: true,
 });
-// const useAxiosSecure = () => {
-useAxiosSecure.interceptors.request.use(
+
+//add header with token in every request call
+axiosSecure.interceptors.request.use(
   function (config) {
     const token = localStorage.getItem("access-token");
-    console.log("intercepting", token);
+    // console.log("intercepting", token);
+    config.headers.authorization = `Bearer ${token}`;
     return config;
   },
   function (error) {
@@ -17,7 +19,24 @@ useAxiosSecure.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-//   return axiosSecure;
-// };
 
-export default useAxiosSecure;
+// add something with api response
+axiosSecure.interceptors.response.use(
+  function (response) {
+    // console.log("intercepting");
+    return response;
+  },
+  (error) => {
+    const status = error.response.status;
+
+    // console.log(status);
+    if (status === 401 || status === 403) {
+      console.log("error in interceptor");
+    }
+    return Promise.reject(error);
+  }
+);
+
+// }
+
+export default axiosSecure;

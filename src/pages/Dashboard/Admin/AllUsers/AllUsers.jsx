@@ -5,12 +5,13 @@ import useAuth from "../../../../hooks/useAuth";
 import Loader from "../../../../components/Loaders/Loader";
 
 const AllUsers = () => {
+  const [Auth] = useAuth();
+
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["allUsers"],
     queryFn: async () => await allUsers(),
   });
-  const { loading } = useAuth();
-  if (loading || isLoading) {
+  if (Auth?.loading || isLoading) {
     return <Loader />;
   }
   // console.log(data);

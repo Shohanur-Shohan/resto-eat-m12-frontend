@@ -4,43 +4,40 @@ import useAxiosSecure from "../hooks/useAxiosSecure";
 const axiosSecure = useAxiosSecure;
 
 export const allMenu = async () => {
-  const res = await axiosSecure.get(`/menu`);
+  const res = await axiosPublic.get(`/menu`);
   const result = res.data;
   return result;
 };
 
 export const addToCart = async (itemData) => {
-  const res = await axiosSecure.post(`/carts`, itemData);
+  const res = await axiosPublic.post(`/carts`, itemData);
   const result = res.data;
   return result;
 };
 
 export const getCart = async (userEmail) => {
-  const res = await axiosSecure.get(`/carts?email=${userEmail}`);
+  const res = await axiosPublic.get(`/carts?email=${userEmail}`);
   const result = res.data;
   return result;
 };
 
 export const deleteCartItem = async (itemId) => {
-  const res = await axiosSecure.delete(`/carts/${itemId}`);
+  const res = await axiosPublic.delete(`/carts/${itemId}`);
   const result = res.data;
+  console.log(result);
   return result;
 };
 
 //store user info in db
 export const sendUserToDB = async (user) => {
-  const res = await axiosPublic.post(`/users`, user);
+  const res = await axiosSecure.post(`/users`, user);
   const result = res.data;
   return result;
 };
 
 //all users in dashboard/admin
 export const allUsers = async () => {
-  const res = await axiosSecure.get(`/users`, {
-    headers: {
-      authorization: `Bearer ${localStorage.getItem("access-token")}`,
-    },
-  });
+  const res = await axiosSecure.get(`/users`);
   const result = res.data;
   return result;
 };
@@ -68,3 +65,21 @@ export const createToken = async (userInfo) => {
   const result = res.data;
   return result;
 };
+
+//find admin
+export const findAdmin = async (email) => {
+  const res = await axiosSecure.get(`/user/admin/${email}`);
+  const result = res.data;
+  // console.log(result);
+  return result;
+};
+// export const findAdmin = async (email) => {
+//   try {
+//     const response = await axiosSecure.get(`/user/admin/${email}`);
+//     if (response.status === 200) {
+//       return response.data; // Assuming the response contains `isAdmin` field
+//     }
+//   } catch (error) {
+//     console.error("Error fetching admin status:", error);
+//   }
+// };

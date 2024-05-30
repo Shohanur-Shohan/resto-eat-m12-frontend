@@ -4,9 +4,9 @@ import useCarts from "../../../../hooks/useCarts";
 import TableItem from "./TableItem";
 
 const MyCart = () => {
-  const { user, loading } = useAuth();
+  const [Auth] = useAuth();
   const [data, isLoading, refetch] = useCarts();
-  if (loading || isLoading) {
+  if (Auth?.loading || isLoading) {
     return <Loader />;
   }
   // console.log(data);

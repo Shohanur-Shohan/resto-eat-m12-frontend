@@ -1,12 +1,36 @@
 import { Outlet } from "react-router-dom";
 import UserSidebar from "../pages/Dashboard/User/UserSidebar";
 import AdminSidebar from "../pages/Dashboard/Admin/AdminSidebar";
-import useAuth from "../hooks/useAuth";
+// import useAuth from "../hooks/useAuth";
 import AdminNavLinks from "../pages/Dashboard/Admin/AdminNavLinks";
 import UserNavLinks from "../pages/Dashboard/User/UserNavLinks";
+import toast from "react-hot-toast";
+import AvatarLoader from "../components/Loaders/AvatarLoader";
+import useAdmin from "../hooks/useAdmin";
+import Loader from "../components/Loaders/Loader";
+import { useContext } from "react";
+import { AuthContext } from "../providers/AuthPovider";
+import { useNavigate } from "react-router-dom";
 
 const DashboardLayout = () => {
-  const { isAdmin } = useAuth();
+  const { user, logOut, loading } = useContext(AuthContext);
+  const [isAdmin, isAdminLoading] = useAdmin();
+  const navigation = useNavigate();
+
+  if (loading || isAdminLoading) {
+    return <Loader />;
+  }
+
+  if (user === null) {
+    navigation("/login");
+  }
+
+  const handlelogOut = () => {
+    logOut();
+    toast.success("Logout Success");
+    navigation("/");
+  };
+
   return (
     <main className="">
       <header className="z-[48] bg-white border-b text-sm py-2.5 sm:py-4">
@@ -49,8 +73,12 @@ const DashboardLayout = () => {
                     </label>
                     {/* small screen side navbar */}
 
-                    {isAdmin ? <AdminNavLinks /> : <UserNavLinks />}
-
+                    {isAdmin?.role === "admin" ? (
+                      <AdminNavLinks isAdminLoading={isAdminLoading} />
+                    ) : (
+                      <UserNavLinks isAdminLoading={isAdminLoading} />
+                    )}
+                    {/* <UserNavLinks /> */}
                     {/* small screen side navbar */}
                   </nav>
                 </ul>
@@ -83,53 +111,39 @@ const DashboardLayout = () => {
               {/* notification */}
 
               {/* avatar */}
-              <div className="dropdown dropdown-end">
-                <div
-                  tabIndex={0}
-                  role="button"
-                  className="flex items-center justify-center rounded-full avatar"
-                >
-                  <div className="w-[32px] sm:w-[40px] rounded-full">
-                    <img
-                      alt="avatar"
-                      className="object cover "
-                      src={`/assets/noProfile.svg`}
-                    />
+              {!loading && user && (
+                <div className="dropdown dropdown-end">
+                  <div
+                    tabIndex={0}
+                    role="button"
+                    className="flex items-center justify-center rounded-full avatar"
+                  >
+                    <div className="w-[32px] sm:w-[40px] rounded-full">
+                      <img
+                        alt="avatar"
+                        className="object cover "
+                        src={`${user?.photoURL || "/assets/noProfile.svg"} `}
+                      />
+                    </div>
                   </div>
+                  <ul
+                    tabIndex={0}
+                    className="menu menu-sm dropdown-content mt-3 z-[999] px-3 py-4 shadow bg-base-100 rounded-box w-52"
+                  >
+                    <li className="pl-2 my-2 text-left text-secondary">
+                      Profile
+                    </li>
+                    <button
+                      onClick={handlelogOut}
+                      className="pl-2 my-2 text-left cursor-pointer text-secondary"
+                    >
+                      Logout
+                    </button>
+                  </ul>
                 </div>
-                {/* content */}
-                <div className="p-2 bg-white rounded-lg shadow-md dropdown-content duration min-w-60">
-                  <div className="px-5 py-3 -m-2 bg-gray-100 rounded-t-lg ">
-                    <p className="text-sm text-gray-500 ">Signed in as</p>
-                    <p className="text-sm font-medium text-gray-800 ">
-                      james@site.com
-                    </p>
-                  </div>
-                  <div className="py-2 mt-2 first:pt-0 last:pb-0">
-                    <a className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500   ">
-                      <svg
-                        className="flex-shrink-0 size-4"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width={24}
-                        height={24}
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                        <circle cx={9} cy={7} r={4} />
-                        <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                      </svg>
-                      Team Account
-                    </a>
-                  </div>
-                </div>
-                {/* content */}
-              </div>
+              )}
+
+              {loading && <AvatarLoader />}
               {/* avatar */}
             </div>
           </div>
@@ -137,7 +151,12 @@ const DashboardLayout = () => {
       </header>
       {/* Sidebar start*/}
 
-      {isAdmin ? <AdminSidebar /> : <UserSidebar />}
+      {isAdmin?.role === "admin" ? (
+        <AdminSidebar isAdminLoading={isAdminLoading} />
+      ) : (
+        <UserSidebar isAdminLoading={isAdminLoading} />
+      )}
+      {/* <UserNavLinks /> */}
 
       {/* End Sidebar */}
       {/* Content */}
