@@ -1,7 +1,7 @@
 const SidebarLaoder = () => {
   return (
     <>
-      <div className="max-w-md p-4 space-y-4 divide-y animate-pulse md:p-6">
+      <div className="w-[260px] p-4 space-y-4 border-gray-200 divide-y animate-pulse md:p-6 border-e min-h-[100vh]">
         <div className="flex items-center justify-between">
           <div>
             <div className="h-2.5 bg-gray-300 rounded-full  w-24 mb-2.5" />

@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom";
 import AdminNavLinks from "./AdminNavLinks";
-import PropTypes from "prop-types";
-import SidebarLaoder from "../../../components/Loaders/SidebarLaoder";
 
-const AdminSidebar = ({ isAdminLoading }) => {
+const AdminSidebar = () => {
   return (
     <>
       <div className="-translate-x-full transition-all duration-300 transform w-[260px] hidden fixed inset-y-0 start-0 z-[60] bg-white border-e border-gray-200 lg:block lg:translate-x-0 lg:end-auto lg:bottom-0">
@@ -18,14 +16,11 @@ const AdminSidebar = ({ isAdminLoading }) => {
           {/* End Logo */}
         </div>
         <nav className="flex flex-col flex-wrap w-full p-6">
-          {isAdminLoading === false ? <AdminNavLinks /> : <SidebarLaoder />}
+          <AdminNavLinks />
         </nav>
       </div>
     </>
   );
 };
 
-AdminSidebar.propTypes = {
-  isAdminLoading: PropTypes.bool,
-};
 export default AdminSidebar;

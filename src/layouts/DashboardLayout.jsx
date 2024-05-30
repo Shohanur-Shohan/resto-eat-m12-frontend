@@ -1,29 +1,27 @@
 import { Outlet } from "react-router-dom";
 import UserSidebar from "../pages/Dashboard/User/UserSidebar";
 import AdminSidebar from "../pages/Dashboard/Admin/AdminSidebar";
-// import useAuth from "../hooks/useAuth";
 import AdminNavLinks from "../pages/Dashboard/Admin/AdminNavLinks";
 import UserNavLinks from "../pages/Dashboard/User/UserNavLinks";
 import toast from "react-hot-toast";
 import AvatarLoader from "../components/Loaders/AvatarLoader";
 import useAdmin from "../hooks/useAdmin";
-import Loader from "../components/Loaders/Loader";
 import { useContext } from "react";
 import { AuthContext } from "../providers/AuthPovider";
 import { useNavigate } from "react-router-dom";
+import SidebarLaoder from "../components/Loaders/SidebarLaoder";
+import { useEffect } from "react";
 
 const DashboardLayout = () => {
   const { user, logOut, loading } = useContext(AuthContext);
-  const [isAdmin, isAdminLoading] = useAdmin();
+  const [isAdmin] = useAdmin();
   const navigation = useNavigate();
 
-  if (loading || isAdminLoading) {
-    return <Loader />;
-  }
-
-  if (user === null) {
-    navigation("/login");
-  }
+  useEffect(() => {
+    if (!loading && !user) {
+      navigation("/login");
+    }
+  }, [user, loading, navigation]);
 
   const handlelogOut = () => {
     logOut();
@@ -73,12 +71,14 @@ const DashboardLayout = () => {
                     </label>
                     {/* small screen side navbar */}
 
-                    {isAdmin?.role === "admin" ? (
-                      <AdminNavLinks isAdminLoading={isAdminLoading} />
+                    {isAdmin === null ? (
+                      <SidebarLaoder />
+                    ) : isAdmin.role === "admin" ? (
+                      <AdminNavLinks />
                     ) : (
-                      <UserNavLinks isAdminLoading={isAdminLoading} />
+                      <UserNavLinks />
                     )}
-                    {/* <UserNavLinks /> */}
+
                     {/* small screen side navbar */}
                   </nav>
                 </ul>
@@ -151,12 +151,13 @@ const DashboardLayout = () => {
       </header>
       {/* Sidebar start*/}
 
-      {isAdmin?.role === "admin" ? (
-        <AdminSidebar isAdminLoading={isAdminLoading} />
+      {isAdmin === null ? (
+        <SidebarLaoder />
+      ) : isAdmin.role === "admin" ? (
+        <AdminSidebar />
       ) : (
-        <UserSidebar isAdminLoading={isAdminLoading} />
+        <UserSidebar />
       )}
-      {/* <UserNavLinks /> */}
 
       {/* End Sidebar */}
       {/* Content */}
