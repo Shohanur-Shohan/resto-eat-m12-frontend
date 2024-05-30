@@ -7,26 +7,22 @@ import InnerPageHeading from "../../components/InnerPageHeading";
 import { Helmet } from "react-helmet-async";
 import { allMenu } from "../../utils/api";
 import Loader from "../../components/Loaders/Loader";
-import { useContext } from "react";
-import { AuthContext } from "../../providers/AuthPovider";
 
 const OurMenu = () => {
   const [menu, setMenu] = useState(null);
-  const { loading } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
 
   const getMenu = async () => {
     const result = await allMenu();
-    // console.log(result, "menu");
-
     setMenu(result);
+    setLoading(false);
   };
+
   useEffect(() => {
+    setLoading(true);
     getMenu();
   }, []);
-  // console.log(menu);
-  if (loading) {
-    return <Loader />;
-  }
+
   return (
     <main className="relative">
       <Helmet>
@@ -41,11 +37,7 @@ const OurMenu = () => {
         <Heading title={"TODAY'S OFFER"} subTitle={"---Don't miss---"} />
         {/* //todays offer */}
         <div className="max-w-[1440px] mx-auto px-2 sm:px-4 lg:px-7.5 xl:px-10 py-4 md:py-5">
-          {menu === null ? (
-            <Loader />
-          ) : (
-            <MenuList data={menu} menu={"offered"} />
-          )}
+          {loading ? <Loader /> : <MenuList data={menu} menu={"offered"} />}
         </div>
       </div>
       {/* //todays offer */}
@@ -58,7 +50,7 @@ const OurMenu = () => {
       />
       <div className="max-w-[1440px] mx-auto px-2 sm:px-4 lg:px-7.5 xl:px-10 my-[50px]">
         <Heading title={"Dessert Items"} subTitle={"---Don't miss---"} />
-        {menu === null ? <Loader /> : <MenuList data={menu} menu={"dessert"} />}
+        {loading ? <Loader /> : <MenuList data={menu} menu={"dessert"} />}
       </div>
       {/* desert*/}
       {/*salad*/}
@@ -70,7 +62,7 @@ const OurMenu = () => {
       />
       <div className="max-w-[1440px] mx-auto px-2 sm:px-4 lg:px-7.5 xl:px-10 my-[50px]">
         <Heading title={"Salad Items"} subTitle={"---Don't miss---"} />
-        {menu === null ? <Loader /> : <MenuList data={menu} menu={"salad"} />}
+        {loading ? <Loader /> : <MenuList data={menu} menu={"salad"} />}
       </div>
       {/*salad*/}
       {/* soup */}
@@ -82,7 +74,7 @@ const OurMenu = () => {
       />
       <div className="max-w-[1440px] mx-auto px-2 sm:px-4 lg:px-7.5 xl:px-10 my-[50px]">
         <Heading title={"Soup Items"} subTitle={"---Don't miss---"} />
-        {menu === null ? <Loader /> : <MenuList data={menu} menu={"soup"} />}
+        {loading ? <Loader /> : <MenuList data={menu} menu={"soup"} />}
       </div>
       {/* soup */}
 
@@ -95,7 +87,7 @@ const OurMenu = () => {
       />
       <div className="max-w-[1440px] mx-auto px-2 sm:px-4 lg:px-7.5 xl:px-10 my-[50px]">
         <Heading title={"Pizza Items"} subTitle={"---Don't miss---"} />
-        {menu === null ? <Loader /> : <MenuList data={menu} menu={"pizza"} />}
+        {loading ? <Loader /> : <MenuList data={menu} menu={"pizza"} />}
       </div>
       {/* pizza */}
     </main>
