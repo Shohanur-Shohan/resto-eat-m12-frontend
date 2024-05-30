@@ -73,13 +73,3 @@ export const findAdmin = async (email) => {
   // console.log(result);
   return result;
 };
-// export const findAdmin = async (email) => {
-//   try {
-//     const response = await axiosSecure.get(`/user/admin/${email}`);
-//     if (response.status === 200) {
-//       return response.data; // Assuming the response contains `isAdmin` field
-//     }
-//   } catch (error) {
-//     console.error("Error fetching admin status:", error);
-//   }
-// };
