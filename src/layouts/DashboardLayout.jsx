@@ -11,6 +11,7 @@ import { AuthContext } from "../providers/AuthPovider";
 import { useNavigate } from "react-router-dom";
 import SidebarLaoder from "../components/Loaders/SidebarLaoder";
 import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 
 const DashboardLayout = () => {
   const { user, logOut, loading } = useContext(AuthContext);
@@ -30,7 +31,10 @@ const DashboardLayout = () => {
   };
 
   return (
-    <main className="">
+    <main>
+      <Helmet>
+        <title>Resto Eat | Dashboard</title>
+      </Helmet>
       <header className="z-[48] bg-white border-b text-sm py-2.5 sm:py-4">
         <nav
           className="flex items-center w-full px-4 mx-auto basis-full sm:px-6"

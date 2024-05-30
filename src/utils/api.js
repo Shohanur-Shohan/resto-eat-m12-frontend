@@ -73,3 +73,29 @@ export const findAdmin = async (email) => {
   // console.log(result);
   return result;
 };
+
+//upload image to imageBB from /dashboard/add-items
+export const uploadRecipeImage = async (imageFile) => {
+  try {
+    const imageHostingKey = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+    const imageHostingApi = `https://api.imgbb.com/1/upload?key=${imageHostingKey}`;
+
+    const res = await axiosPublic.post(imageHostingApi, imageFile, {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    });
+    const result = res?.data;
+    return result;
+  } catch (error) {
+    console.log(error, "Can't upload image to server");
+  }
+};
+
+//add item to db menu from /dashboard/add-items
+export const addMenuItem = async (menuItem) => {
+  // console.log(userInfo);
+  const res = await axiosSecure.post(`/menu`, menuItem);
+  const result = res.data;
+  return result;
+};

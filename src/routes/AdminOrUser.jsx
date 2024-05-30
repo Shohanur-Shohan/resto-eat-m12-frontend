@@ -13,6 +13,7 @@ import AllUsers from "../pages/Dashboard/Admin/AllUsers/AllUsers";
 import { useRoutes } from "react-router-dom";
 import useAdmin from "../hooks/useAdmin";
 import Loader from "../components/Loaders/Loader";
+import AddItems from "../pages/Dashboard/Admin/AddItems/AddItems";
 
 const AdminOrUser = () => {
   const [isAdmin, isAdminLoading] = useAdmin();
@@ -26,7 +27,7 @@ const AdminOrUser = () => {
 
   const adminRoutes = [
     { path: "", element: <AdminDashboard /> },
-    { path: "reservation", element: <Reservation /> },
+    { path: "add-items", element: <AddItems /> },
     { path: "manage-items", element: <ManageItems /> },
     { path: "manage-booking", element: <MyCart /> },
     { path: "all-users", element: <AllUsers /> },

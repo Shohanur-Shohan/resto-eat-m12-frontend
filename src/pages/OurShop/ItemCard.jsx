@@ -8,13 +8,14 @@ import useCarts from "../../hooks/useCarts";
 
 const ItemCard = ({ data }) => {
   const { _id, image, name, price, recipe } = data;
-  const [user] = useAuth();
+  const [Auth] = useAuth();
+  const userEmail = Auth?.user?.email;
   const [cartData, isLoading, refetch] = useCarts();
   const navigate = useNavigate();
   const location = useLocation();
 
   const handleAddToCart = () => {
-    if (user && user?.email) {
+    if (Auth?.user && userEmail) {
       Swal.fire({
         title: "Are you sure?",
         icon: "warning",
@@ -26,7 +27,7 @@ const ItemCard = ({ data }) => {
         if (result.isConfirmed) {
           const cartItem = {
             menuID: _id,
-            userEmail: user?.email,
+            userEmail: userEmail,
             name,
             image,
             price,
