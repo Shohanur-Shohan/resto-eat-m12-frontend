@@ -69,7 +69,7 @@ const AuthPovider = ({ children }) => {
 
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setLoading(false);
+      setLoading(true);
       setUser(currentUser);
       const userInfo = {
         email: currentUser?.email,
@@ -82,16 +82,20 @@ const AuthPovider = ({ children }) => {
             if (result) {
               // console.log(result, result?.token);
               localStorage.setItem("access-token", result?.token);
+      setLoading(false);
             } else {
               console.log("can not set token from auth");
               localStorage.removeItem("access-token");
+              setLoading(false);
             }
           } catch (error) {
             console.log("something went wrong in handle auth change");
+            setLoading(false);
           }
         } else {
           console.log("can not set token from auth");
           localStorage.removeItem("access-token");
+          setLoading(false);
         }
       };
       handleAuthChange();

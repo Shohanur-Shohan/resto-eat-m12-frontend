@@ -92,6 +92,28 @@ export const uploadRecipeImage = async (imageFile) => {
   }
 };
 
+  //payment done info to db
+  export const paymentDoneInfo = async (paymentData)=>{
+    const res = await axiosSecure.post('/payment', paymentData);
+    const result = res?.data;
+    
+    return result;
+  }
+
+  //find payment history
+export const paymentHistory = async (email) => {
+  const res = await axiosSecure.get(`/payments/${email}`);
+  const result = res.data;
+  return result;
+};
+
+
+export const adminStats = async (email) => {
+  const res = await axiosSecure.get(`/admin_stats/${email}`);
+  const result = res.data;
+  return result;
+};
+
 //add item to db menu from /dashboard/add-items
 export const addMenuItem = async (menuItem) => {
   // console.log(userInfo);

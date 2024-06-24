@@ -69,6 +69,7 @@ const SignIn = () => {
         const userInfo = {
           userName: currentUser?.displayName,
           userEmail: currentUser?.email,
+          role: "user"
         };
         if (currentUser) {
           const result = await sendUserToDB(userInfo);

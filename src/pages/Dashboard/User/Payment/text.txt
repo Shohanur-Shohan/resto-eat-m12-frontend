@@ -1,0 +1,80 @@
+<p className="mb-2 text-xl font-medium text-center md:text-3xl">
+          Payment Page
+        </p>
+        <p className="text-center text-gray-400">
+          Complete your order by providing your payment details.
+        </p>
+        <div className="mt-[50px]">
+          <label
+            htmlFor="card-holder"
+            className="block mt-4 mb-2 text-sm font-medium"
+          >
+            Card Holder
+          </label>
+          <div className="">
+            <input
+              type="text"
+              id="card-holder"
+              name="card-holder"
+              className="w-full px-4 py-3 pl-3 text-sm capitalize border border-gray-200 rounded-md shadow-sm outline-none focus:border-blue-500 focus:ring-blue-500"
+              placeholder="Your full name.."
+            />
+          </div>
+          <label
+            htmlFor="card-no"
+            className="block mt-4 mb-2 text-sm font-medium"
+          >
+            Card Details
+          </label>
+          <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-5">
+            <div className="col-span-1 md:col-span-2 lg:col-span-3">
+              <input
+                type="text"
+                id="card-no"
+                name="card-no"
+                className="w-full px-2 py-3 pl-3 text-sm border border-gray-200 rounded-md shadow-sm outline-none focus:border-blue-500 focus:ring-blue-500"
+                placeholder="xxxx-xxxx-xxxx-xxxx"
+              />
+            </div>
+            <div className="col-span-1">
+              <input
+                type="date"
+                name="credit-expiry"
+                className="w-full px-2 py-3 text-sm border border-gray-200 rounded-md shadow-sm outline-none focus:border-blue-500 focus:ring-blue-500"
+                placeholder="MM/YY"
+              />
+            </div>
+            <div className="col-span-1">
+              <input
+                type="text"
+                name="credit-cvc"
+                className="w-full px-2 py-3 text-sm border border-gray-200 rounded-md shadow-sm outline-none focus:border-blue-500 focus:ring-blue-500"
+                placeholder="CVC"
+              />
+            </div>
+          </div>
+          <label
+            htmlFor="billing-address"
+            className="block mt-4 mb-2 text-sm font-medium"
+          >
+            Billing Address
+          </label>
+          <div className="flex">
+            <div className="w-full">
+              <input
+                type="text"
+                id="billing-address"
+                name="billing-address"
+                className="w-full px-4 py-3 pl-3 text-sm border border-gray-200 rounded-md shadow-sm outline-none focus:border-blue-500 focus:ring-blue-500"
+                placeholder="Street Address"
+              />
+            </div>
+          </div>
+          
+        </div>
+        <button
+          onClick={handlePay}
+          className="w-full px-6 py-3 mt-4 mb-8 font-medium text-white bg-gray-900 rounded-md"
+        >
+          Pay
+        </button>

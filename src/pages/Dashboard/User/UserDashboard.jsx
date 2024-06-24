@@ -7,6 +7,7 @@ const Dashboard = () => {
         <title>Resto Eat | Dashboard</title>
       </Helmet>
       {/* user dashboard */}
+      user dashboard
     </div>
   );
 };

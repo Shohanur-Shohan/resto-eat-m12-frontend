@@ -9,20 +9,17 @@ import MyBooking from "../pages/Dashboard/User/MyBooking/MyBooking";
 import AdminDashboard from "../pages/Dashboard/Admin/AdminDashboard";
 import ManageItems from "../pages/Dashboard/Admin/ManageItems/ManageItems";
 import AllUsers from "../pages/Dashboard/Admin/AllUsers/AllUsers";
-// import useAuth from "../hooks/useAuth";
 import { useRoutes } from "react-router-dom";
 import useAdmin from "../hooks/useAdmin";
 import Loader from "../components/Loaders/Loader";
 import AddItems from "../pages/Dashboard/Admin/AddItems/AddItems";
+import Payment from "../pages/Dashboard/User/Payment/Payment";
 
 const AdminOrUser = () => {
   const [isAdmin, isAdminLoading] = useAdmin();
 
-  if (isAdminLoading) {
-    return <Loader />;
-  }
-  // if (!isAdminLoading && isAdmin) {
-  //   console.log(isAdmin);
+  // if (isAdminLoading) {
+  //   return <Loader />;
   // }
 
   const adminRoutes = [
@@ -38,6 +35,7 @@ const AdminOrUser = () => {
     { path: "reservation", element: <Reservation /> },
     { path: "payment-history", element: <PaymentHistory /> },
     { path: "my-cart", element: <MyCart /> },
+    { path: "payment", element: <Payment /> },
     { path: "add-review", element: <AddReview /> },
     { path: "my-booking", element: <MyBooking /> },
   ];

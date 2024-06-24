@@ -30,6 +30,7 @@ const SignUp = () => {
       const userInfo = {
         userName: displayName,
         userEmail: email,
+        role: "user"
       };
       //create user
       createUser(email, password)
@@ -65,6 +66,8 @@ const SignUp = () => {
         const userInfo = {
           userName: currentUser?.displayName,
           userEmail: currentUser?.email,
+          role: "user"
+
         };
         if (currentUser) {
           const result = await sendUserToDB(userInfo);

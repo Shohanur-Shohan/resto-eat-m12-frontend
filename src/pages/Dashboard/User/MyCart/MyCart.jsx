@@ -1,7 +1,9 @@
+import { Link } from "react-router-dom";
 import Loader from "../../../../components/Loaders/Loader";
 import useAuth from "../../../../hooks/useAuth";
 import useCarts from "../../../../hooks/useCarts";
 import TableItem from "./TableItem";
+import toast from "react-hot-toast";
 
 const MyCart = () => {
   const [Auth] = useAuth();
@@ -13,6 +15,10 @@ const MyCart = () => {
   const totalPrice = data?.reduce((prevPrice, currentPrice) => {
     return prevPrice + currentPrice?.price;
   }, 0);
+
+  const handleEmptyCart = () => {
+    toast.error("Your cart is empty!");
+  };
 
   return (
     <div className="px-2 sm:px-4 py-[50px] w-full min-h-[100vh]">
@@ -51,11 +57,26 @@ const MyCart = () => {
           </div>
           {/* End Card */}
           {/* Card */}
-          <div className="flex items-center justify-center p-4 bg-red-500 border shadow-sm cursor-pointer gap-y-3 lg:gap-y-5 md:p-5 rounded-xl">
-            <h1 className="text-3xl font-semibold text-white sm:text-4xl lg:text-5xl ">
-              Pay Now
-            </h1>
-          </div>
+          {data.length === 0 ? (
+            <button
+              onClick={handleEmptyCart}
+              className="flex items-center justify-center p-4 bg-red-500 border shadow-sm cursor-pointer gap-y-3 lg:gap-y-5 md:p-5 rounded-xl"
+            >
+              <h1 className="text-3xl font-semibold text-white sm:text-4xl lg:text-5xl ">
+                Pay Now
+              </h1>
+            </button>
+          ) : (
+            <Link
+              to={"/dashboard/payment"}
+              className="flex items-center justify-center p-4 bg-red-500 border shadow-sm cursor-pointer gap-y-3 lg:gap-y-5 md:p-5 rounded-xl"
+            >
+              <h1 className="text-3xl font-semibold text-white sm:text-4xl lg:text-5xl ">
+                Pay Now
+              </h1>
+            </Link>
+          )}
+
           {/* End Card */}
         </div>
         {/* End Grid */}
