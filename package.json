@@ -24,6 +24,7 @@
     "react-router-dom": "^6.23.1",
     "react-simple-captcha": "^9.3.1",
     "react-tabtab": "^2.0.0",
+    "recharts": "^2.12.7",
     "sweetalert2": "^11.11.0",
     "swiper": "^11.1.3"
   },

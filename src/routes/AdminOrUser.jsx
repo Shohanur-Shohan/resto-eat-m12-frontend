@@ -14,6 +14,7 @@ import useAdmin from "../hooks/useAdmin";
 import Loader from "../components/Loaders/Loader";
 import AddItems from "../pages/Dashboard/Admin/AddItems/AddItems";
 import Payment from "../pages/Dashboard/User/Payment/Payment";
+import ManageBookings from "../pages/Dashboard/Admin/ManageBookings/ManageBookings";
 
 const AdminOrUser = () => {
   const [isAdmin, isAdminLoading] = useAdmin();
@@ -26,7 +27,7 @@ const AdminOrUser = () => {
     { path: "", element: <AdminDashboard /> },
     { path: "add-items", element: <AddItems /> },
     { path: "manage-items", element: <ManageItems /> },
-    { path: "manage-booking", element: <MyCart /> },
+    { path: "manage-booking", element: <ManageBookings /> },
     { path: "all-users", element: <AllUsers /> },
   ];
 
