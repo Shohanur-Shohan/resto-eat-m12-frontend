@@ -88,7 +88,7 @@ export const uploadRecipeImage = async (imageFile) => {
     const result = res?.data;
     return result;
   } catch (error) {
-    console.log(error, "Can't upload image to server");
+    // console.log(error, "Can't upload image to server");
   }
 };
 

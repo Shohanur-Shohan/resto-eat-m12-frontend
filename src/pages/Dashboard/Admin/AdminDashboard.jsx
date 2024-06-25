@@ -41,7 +41,6 @@ const Dashboard = () => {
     return <Loader />;
   }
 
-  console.log(orderData);
   const {users, menus, orders, revenue} = data;
 
   //newOrderData

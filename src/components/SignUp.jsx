@@ -48,7 +48,7 @@ const SignUp = () => {
           }
         })
         .catch((error) => {
-          console.log(error.message);
+          // console.log(error.message);
           setLoading(false);
           toast.error("Regristration Failed!");
         });
@@ -85,7 +85,7 @@ const SignUp = () => {
       })
       .catch((error) => {
         const errorMessage = error.message;
-        console.log(errorMessage);
+        // console.log(errorMessage);
         toast.error("Login failed!");
       });
   };

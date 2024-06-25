@@ -84,16 +84,16 @@ const AuthPovider = ({ children }) => {
               localStorage.setItem("access-token", result?.token);
       setLoading(false);
             } else {
-              console.log("can not set token from auth");
+              ("can not set token from auth");
               localStorage.removeItem("access-token");
               setLoading(false);
             }
           } catch (error) {
-            console.log("something went wrong in handle auth change");
+            // console.log("something went wrong in handle auth change");
             setLoading(false);
           }
         } else {
-          console.log("can not set token from auth");
+          // console.log("can not set token from auth");
           localStorage.removeItem("access-token");
           setLoading(false);
         }

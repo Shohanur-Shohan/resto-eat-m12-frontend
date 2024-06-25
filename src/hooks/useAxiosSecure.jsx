@@ -15,7 +15,7 @@ axiosSecure.interceptors.request.use(
   },
   function (error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
-    console.log("error");
+    // console.log("error");
     return Promise.reject(error);
   }
 );
@@ -31,7 +31,7 @@ axiosSecure.interceptors.response.use(
 
     // console.log(status);
     if (status === 401 || status === 403) {
-      console.log("error in interceptor");
+      // console.log("error in interceptor");
     }
     return Promise.reject(error);
   }

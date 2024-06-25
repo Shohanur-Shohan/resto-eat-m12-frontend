@@ -56,7 +56,7 @@ const CheckoutForm = ({ totalPrice, data }) => {
       card,
     });
     if (error) {
-      console.log("Payment failed", error);
+      // console.log("Payment failed", error);
       setErrorMessage(error?.message);
     } else {
       // console.log("Payment Method", paymentMethod);

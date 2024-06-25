@@ -49,7 +49,7 @@ const SignIn = () => {
             }
           })
           .catch((error) => {
-            console.log(error.message);
+            // console.log(error.message);
             toast.error("Login failed!");
           });
       } else {
@@ -87,7 +87,7 @@ const SignIn = () => {
       })
       .catch((error) => {
         const errorMessage = error.message;
-        console.log(errorMessage);
+        // console.log(errorMessage);
         toast.error("Login failed!");
       });
   };
