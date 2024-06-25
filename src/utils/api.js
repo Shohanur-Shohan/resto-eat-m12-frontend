@@ -108,16 +108,25 @@ export const paymentHistory = async (email) => {
 };
 
 
+
+//add item to db menu from /dashboard/add-items
+export const addMenuItem = async (menuItem) => {
+  // console.log(userInfo);
+  const res = await axiosSecure.post(`/menu`, menuItem);
+  const result = res.data;
+  return result;
+};
+
+//admin dashboard statistics
 export const adminStats = async (email) => {
   const res = await axiosSecure.get(`/admin_stats/${email}`);
   const result = res.data;
   return result;
 };
 
-//add item to db menu from /dashboard/add-items
-export const addMenuItem = async (menuItem) => {
-  // console.log(userInfo);
-  const res = await axiosSecure.post(`/menu`, menuItem);
+//order stats in admin dashboard
+export const orderStats = async (email) => {
+  const res = await axiosSecure.get(`/order-stats/${email}`);
   const result = res.data;
   return result;
 };

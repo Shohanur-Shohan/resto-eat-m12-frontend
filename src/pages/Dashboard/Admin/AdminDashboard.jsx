@@ -1,15 +1,18 @@
 import { Helmet } from "react-helmet-async";
 import useAuth from "../../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
-import { adminStats } from "../../../utils/api";
+import { adminStats, orderStats } from "../../../utils/api";
 import Loader from "../../../components/Loaders/Loader";
 import {
   Bar,
   BarChart,
   CartesianGrid,
+  Cell,
   Legend,
   Line,
   LineChart,
+  Pie,
+  PieChart,
   Rectangle,
   ResponsiveContainer,
   Tooltip,
@@ -23,62 +26,92 @@ const Dashboard = () => {
   const email = Auth?.user?.email;
 
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ["allUsers", email],
+    queryKey: ["admin-stats", email],
     enabled: !!email,
     queryFn: async () => await adminStats(email),
   });
+
+  const { data: orderData, isLoading: isOrderStatsLoading, refetch: isOrderStatsRefetch } = useQuery({
+    queryKey: ["order-stats", email],
+    enabled: !!email,
+    queryFn: async () => await orderStats(email),
+  });
   
-  if (Auth?.loading || isLoading) {
+  if (Auth?.loading || isLoading || isOrderStatsLoading) {
     return <Loader />;
   }
 
-  // console.log(data);
+  console.log(orderData);
   const {users, menus, orders, revenue} = data;
 
-  const demo = [
-    {
-      name: "Page A",
-      uv: 4000,
-      pv: 2400,
-      amt: 2400,
-    },
-    {
-      name: "Page B",
-      uv: 3000,
-      pv: 1398,
-      amt: 2210,
-    },
-    {
-      name: "Page C",
-      uv: 2000,
-      pv: 9800,
-      amt: 2290,
-    },
-    {
-      name: "Page D",
-      uv: 2780,
-      pv: 3908,
-      amt: 2000,
-    },
-    {
-      name: "Page E",
-      uv: 1890,
-      pv: 4800,
-      amt: 2181,
-    },
-    {
-      name: "Page F",
-      uv: 2390,
-      pv: 3800,
-      amt: 2500,
-    },
-    {
-      name: "Page G",
-      uv: 3490,
-      pv: 4300,
-      amt: 2100,
-    },
-  ];
+  //newOrderData
+  const newOrderData = orderData.map((item)=>{
+    return {
+      "name": item?.category,
+      "value": item?.revenue
+    }
+  })
+
+  // const demo = [
+  //   {
+  //     name: "Page A",
+  //     uv: 4000,
+  //     pv: 2400,
+  //     amt: 2400,
+  //   },
+  //   {
+  //     name: "Page B",
+  //     uv: 3000,
+  //     pv: 1398,
+  //     amt: 2210,
+  //   },
+  //   {
+  //     name: "Page C",
+  //     uv: 2000,
+  //     pv: 9800,
+  //     amt: 2290,
+  //   },
+  //   {
+  //     name: "Page D",
+  //     uv: 2780,
+  //     pv: 3908,
+  //     amt: 2000,
+  //   },
+  //   {
+  //     name: "Page E",
+  //     uv: 1890,
+  //     pv: 4800,
+  //     amt: 2181,
+  //   },
+  //   {
+  //     name: "Page F",
+  //     uv: 2390,
+  //     pv: 3800,
+  //     amt: 2500,
+  //   },
+  //   {
+  //     name: "Page G",
+  //     uv: 3490,
+  //     pv: 4300,
+  //     amt: 2100,
+  //   },
+  // ];
+
+  // const data2 = [
+  //   { name: 'Group A', value: 400 },
+  //   { name: 'Group B', value: 300 },
+  //   { name: 'Group C', value: 300 },
+  //   { name: 'Group D', value: 200 },
+  // ];
+
+  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+
+const RADIAN = Math.PI / 180;
+const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+  const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+  const x = cx + radius * Math.cos(-midAngle * RADIAN);
+  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+}
 
   return (
     <section className="w-full h-full">
@@ -221,7 +254,7 @@ const Dashboard = () => {
         <div className="h-[500px] w-full rounded-md border border-input bg-muted/40 py-4">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
-              data={demo}
+              data={orderData}
               margin={{
                 top: 5,
                 right: 5,
@@ -230,17 +263,17 @@ const Dashboard = () => {
               }}
             >
               {/* <CartesianGrid strokeDasharray="3 3" /> */}
-              <XAxis dataKey="name" />
+              <XAxis dataKey="category" />
               <YAxis />
               <Tooltip />
               <Legend />
               <Bar
-                dataKey="pv"
+                dataKey="revenue"
                 fill="#8884d8"
                 activeBar={<Rectangle fill="pink" stroke="blue" />}
               />
               <Bar
-                dataKey="uv"
+                dataKey="quantity"
                 fill="#82ca9d"
                 activeBar={<Rectangle fill="gold" stroke="purple" />}
               />
@@ -248,32 +281,27 @@ const Dashboard = () => {
           </ResponsiveContainer>
         </div>
         <div className="h-[500px] w-full rounded-md border border-input bg-muted/40 py-4">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart
-                width={500}
-                height={300}
-                data={demo}
-                margin={{
-                  top: 5,
-                  right: 5,
-                  left: 5,
-                  bottom: 5,
-                }}
-              >
-                {/* <CartesianGrid strokeDasharray="3 3" /> */}
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Line
-                  type="monotone"
-                  dataKey="pv"
-                  stroke="#8884d8"
-                  activeDot={{ r: 8 }}
-                />
-                <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-              </LineChart>
-            </ResponsiveContainer>
+        <ResponsiveContainer width="100%" height="100%">
+        <PieChart width={400} height={400}>
+          <Pie
+            data={newOrderData}
+            cx="50%"
+            cy="50%"
+            labelLine={false}
+            label={renderCustomizedLabel}
+            outerRadius={80}
+            fill="#8884d8"
+            dataKey="value"
+          >
+            {newOrderData.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+          <Tooltip />
+          <Legend />
+
+        </PieChart>
+      </ResponsiveContainer>
         </div>
       </div>
 
